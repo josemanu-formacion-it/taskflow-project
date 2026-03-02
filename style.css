@@ -4,7 +4,7 @@
   --color-card: #ffffff;
   --color-accent: #4a6cf7;
   --color-text: #222;
-  --radius: 8px;
+  --radius: 10px;
   --padding: 1rem;
   --font-main: "Segoe UI", sans-serif;
 }
@@ -48,6 +48,7 @@ main {
   gap: 1rem;
 }
 
+/* TARJETAS DE TAREA */
 .tarea {
   display: flex;
   justify-content: space-between;
@@ -56,11 +57,43 @@ main {
   padding: var(--padding);
   border-radius: var(--radius);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: all .3s ease; /* BONUS */
+
+  /* TRANSICIONES SUAVES */
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background-color .25s ease,
+    opacity .25s ease;
+
+  /* ANIMACIÓN DE ENTRADA */
+  opacity: 0;
+  transform: translateY(10px);
+  animation: aparecer .6s ease forwards;
 }
 
+/* ESCALONADO DE ANIMACIÓN */
+.tarea:nth-child(1) { animation-delay: .1s; }
+.tarea:nth-child(2) { animation-delay: .2s; }
+.tarea:nth-child(3) { animation-delay: .3s; }
+
+/* HOVER ELEGANTE */
 .tarea:hover {
-  transform: scale(1.02); /* BONUS */
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+  background-color: #eef2ff;
+}
+
+/* EFECTO DE CLIC */
+.tarea:active {
+  transform: scale(.97);
+}
+
+/* ANIMACIÓN DE ENTRADA */
+@keyframes aparecer {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* BADGES */
@@ -71,8 +104,26 @@ main {
   font-size: .9rem;
 }
 
-.prioridad-alta { background: #e63946; }
-.prioridad-media { background: #ffb703; }
+/* PRIORIDADES */
+.prioridad-alta {
+  background: #e63946;
+  animation: pulso 1.5s infinite ease-in-out;
+}
+
+.prioridad-media {
+  background: #ffb703;
+}
+
+.prioridad-baja {
+  background: #2a9d8f;
+}
+
+/* ANIMACIÓN DE PULSO PARA PRIORIDAD ALTA */
+@keyframes pulso {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
 
 /* MEDIA QUERY PARA MÓVILES */
 @media (max-width: 700px) {
@@ -91,6 +142,6 @@ main {
   }
 
   main {
-    margin-bottom: 100px; /* espacio para el sidebar */
+    margin-bottom: 100px;
   }
 }
