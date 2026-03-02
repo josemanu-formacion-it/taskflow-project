@@ -7,3 +7,14 @@
   --padding: 1rem;
   --font-main: "Segoe UI", sans-serif;
 }
+
+/* Ejemplo de variables */
+body {
+  background: var(--color-bg);
+  padding: var(--padding);
+}
+
+.card {
+  background: var(--color-card);
+  border-radius: var(--radius);
+}
