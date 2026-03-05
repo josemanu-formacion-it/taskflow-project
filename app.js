@@ -1,4 +1,4 @@
-// app.js - lógica de tareas con persistencia en localStorage
+// app.js - Taskflow: persistencia sin borrar tareas previas
 const STORAGE_KEY = 'taskflow.tasks';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const list = document.getElementById('tasks-list');
   const search = document.getElementById('search-input');
 
+  // Cargar tareas existentes (si las hay) y renderizar
   let tasks = loadTasks();
-
   renderTasks(tasks, list);
 
-  // Añadir tarea
+  // Añadir tarea: no borra tareas previas, solo añade al array y guarda
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const text = input.value.trim();
@@ -25,21 +25,25 @@ document.addEventListener('DOMContentLoaded', () => {
       priority: priority.value,
       completed: false
     };
-    tasks.unshift(newTask); // añadir al inicio
+    // Añadir al inicio para que la nueva aparezca arriba; no se elimina nada
+    tasks.unshift(newTask);
     saveTasks(tasks);
     renderTasks(tasks, list);
     form.reset();
     input.focus();
   });
 
-  // Delegación: borrar tarea o marcar completada
+  // Delegación de eventos en la lista: borrar y alternar completado
   list.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
-    const id = btn.closest('.tarea')?.dataset.id;
+    const taskEl = btn.closest('.tarea');
+    if (!taskEl) return;
+    const id = taskEl.dataset.id;
     if (!id) return;
 
     if (btn.dataset.action === 'delete') {
+      // Eliminar solo la tarea seleccionada
       tasks = tasks.filter(t => t.id !== id);
       saveTasks(tasks);
       renderTasks(tasks, list);
@@ -54,14 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Filtro de búsqueda (bonus)
+  // Filtro de búsqueda (no modifica tareas guardadas)
   search.addEventListener('input', () => {
     const q = search.value.trim().toLowerCase();
     renderTasks(tasks, list, q);
   });
 });
 
-/* RENDER: pinta la lista en el DOM, opcionalmente filtra por query */
+/* Renderiza tareas en el DOM; no altera el array original */
 function renderTasks(tasks, container, query = '') {
   container.innerHTML = '';
   const filtered = tasks.filter(t => {
@@ -74,8 +78,7 @@ function renderTasks(tasks, container, query = '') {
   if (filtered.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'tarea';
-    empty.style.justifyContent = 'center';
-    empty.style.opacity = 1;
+    empty.setAttribute('aria-hidden', 'true');
     empty.textContent = 'No hay tareas';
     container.appendChild(empty);
     return;
@@ -112,12 +115,13 @@ function renderTasks(tasks, container, query = '') {
     toggleBtn.className = 'btn-toggle';
     toggleBtn.textContent = task.completed ? 'Deshacer' : 'Hecho';
     toggleBtn.dataset.action = 'toggle';
-    toggleBtn.style.marginLeft = '.6rem';
+    toggleBtn.type = 'button';
 
     const del = document.createElement('button');
     del.className = 'btn-delete';
     del.textContent = 'Borrar';
     del.dataset.action = 'delete';
+    del.type = 'button';
 
     right.appendChild(badge);
     right.appendChild(toggleBtn);
@@ -130,7 +134,6 @@ function renderTasks(tasks, container, query = '') {
   });
 }
 
-/* Asigna clase según prioridad */
 function priorityClass(priority) {
   switch ((priority || '').toLowerCase()) {
     case 'alta': return 'prioridad-alta';
@@ -140,7 +143,7 @@ function priorityClass(priority) {
   }
 }
 
-/* Persistencia */
+/* Persistencia: guarda y carga sin borrar datos previos */
 function saveTasks(tasks) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
