@@ -5,57 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TaskFlow Project</title>
 
-  <!-- Tailwind generado -->
   <link rel="stylesheet" href="output.css" />
 </head>
 
-<body class="bg-gray-100 text-gray-900 min-h-screen">
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 text-gray-900 min-h-screen">
 
   <!-- Header -->
-  <header class="bg-white shadow-md">
-    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-      <h1 class="text-2xl font-bold text-blue-600">TaskFlow</h1>
-      <nav class="space-x-4">
-        <a href="#" class="text-gray-700 hover:text-blue-600">Inicio</a>
-        <a href="#" class="text-gray-700 hover:text-blue-600">Tareas</a>
-        <a href="#" class="text-gray-700 hover:text-blue-600">Perfil</a>
+  <header class="bg-white/80 backdrop-blur shadow-md sticky top-0 z-10">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-3xl font-extrabold text-blue-600 tracking-tight">TaskFlow</h1>
+      <nav class="space-x-6 text-lg">
+        <a href="#" class="text-gray-700 hover:text-blue-600 transition">Inicio</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600 transition">Tareas</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600 transition">Perfil</a>
       </nav>
     </div>
   </header>
 
   <!-- Contenido principal -->
-  <main class="max-w-5xl mx-auto px-4 py-10 space-y-10">
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-10">
 
     <!-- Sección de bienvenida -->
-    <section class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold mb-4">Bienvenido a TaskFlow</h2>
-      <p class="text-gray-700">
-        Aquí podrás gestionar tus tareas, organizar tu flujo de trabajo y mantener todo bajo control.
+    <section class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+      <h2 class="text-2xl font-bold mb-3">Bienvenido a TaskFlow</h2>
+      <p class="text-gray-700 leading-relaxed">
+        Gestiona tus tareas, organiza tu flujo de trabajo y mantén todo bajo control con una interfaz clara y moderna.
       </p>
     </section>
 
     <!-- Formulario para crear tareas -->
-    <section class="bg-white p-6 rounded-lg shadow-md">
-      <h3 class="text-lg font-semibold mb-4">Crear nueva tarea</h3>
+    <section class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+      <h3 class="text-xl font-semibold mb-6">Crear nueva tarea</h3>
 
-      <form id="taskForm" class="space-y-4">
+      <form id="taskForm" class="space-y-5">
         <input
           type="text"
           id="taskTitle"
           placeholder="Título de la tarea"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
           required
         />
 
         <textarea
           id="taskDescription"
           placeholder="Descripción"
-          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+          class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         ></textarea>
 
         <button
           type="submit"
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition font-medium"
         >
           Añadir tarea
         </button>
@@ -63,10 +62,10 @@
     </section>
 
     <!-- Lista de tareas -->
-    <section class="bg-white p-6 rounded-lg shadow-md">
-      <h3 class="text-lg font-semibold mb-4">Tus tareas</h3>
+    <section class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+      <h3 class="text-xl font-semibold mb-6">Tus tareas</h3>
 
-      <ul id="taskList" class="space-y-3">
+      <ul id="taskList" class="space-y-4">
         <!-- Las tareas se insertarán aquí dinámicamente -->
       </ul>
     </section>
@@ -74,12 +73,10 @@
   </main>
 
   <!-- Footer -->
-  <footer class="text-center text-gray-600 py-6">
+  <footer class="text-center text-gray-600 py-8">
     © 2026 TaskFlow Project — Todos los derechos reservados.
   </footer>
 
-  <!-- Scripts de la aplicación -->
   <script type="module" src="src/app.js"></script>
-
 </body>
 </html>
