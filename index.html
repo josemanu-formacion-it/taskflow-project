@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskFlow de José Manuel</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <header>
-      <h1>TaskFlow de José Manuel</h1>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow de José Manuel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>TaskFlow de José Manuel</h1>
+  </header>
 
-    <aside>
-      <p>Sidebar</p>
-    </aside>
+  <aside>
+    <p>Sidebar</p>
+  </aside>
 
-    <main>
-      <!-- Formulario para añadir tareas -->
-      <form id="task-form" class="task-form" autocomplete="off">
-        <input id="task-input" type="text" placeholder="Añadir nueva tarea..." required>
-        <select id="task-category" aria-label="Categoría">
-          <option value="Trabajo">Trabajo</option>
-          <option value="Estudios">Estudios</option>
-          <option value="Personal">Personal</option>
-        </select>
-        <select id="task-priority" aria-label="Prioridad">
-          <option value="Alta">Alta</option>
-          <option value="Media">Media</option>
-          <option value="Baja">Baja</option>
-        </select>
-        <button type="submit">Añadir</button>
-      </form>
+  <main>
+    <!-- Formulario para añadir tareas -->
+    <form id="task-form" class="task-form" autocomplete="off">
+      <input id="task-input" name="task" type="text" placeholder="Añadir nueva tarea..." required>
+      <select id="task-category" name="category" aria-label="Categoría">
+        <option value="Trabajo">Trabajo</option>
+        <option value="Estudios">Estudios</option>
+        <option value="Personal">Personal</option>
+      </select>
+      <select id="task-priority" name="priority" aria-label="Prioridad">
+        <option value="Alta">Alta</option>
+        <option value="Media">Media</option>
+        <option value="Baja">Baja</option>
+      </select>
+      <button type="submit">Añadir</button>
+    </form>
 
-      <!-- Filtro de búsqueda (bonus) -->
-      <div class="search-wrap">
-        <input id="search-input" type="search" placeholder="Buscar tareas...">
-      </div>
+    <!-- Filtro de búsqueda (bonus) -->
+    <div class="search-wrap">
+      <input id="search-input" type="search" placeholder="Buscar tareas...">
+    </div>
 
-      <!-- Lista de tareas -->
-      <section class="lista-tareas" id="tasks-list" aria-live="polite">
-        <!-- Las tareas se inyectan aquí desde app.js -->
-      </section>
-    </main>
+    <!-- Lista de tareas -->
+    <section class="lista-tareas" id="tasks-list" aria-live="polite">
+      <!-- Las tareas se inyectan aquí desde app.js -->
+    </section>
+  </main>
 
-    <script src="app.js" defer></script>
-  </body>
+  <script src="app.js" defer></script>
+</body>
 </html>
