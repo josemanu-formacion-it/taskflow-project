@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TaskFlow de José Manuel</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow Project</title>
+
+  <!-- Tailwind generado -->
+  <link rel="stylesheet" href="output.css" />
 </head>
-<body>
-  <header>
-    <h1>TaskFlow de José Manuel</h1>
+
+<body class="bg-gray-100 text-gray-900 min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-blue-600">TaskFlow</h1>
+      <nav class="space-x-4">
+        <a href="#" class="text-gray-700 hover:text-blue-600">Inicio</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600">Tareas</a>
+        <a href="#" class="text-gray-700 hover:text-blue-600">Perfil</a>
+      </nav>
+    </div>
   </header>
 
-  <aside>
-    <p>Sidebar</p>
-  </aside>
+  <!-- Contenido principal -->
+  <main class="max-w-5xl mx-auto px-4 py-10">
+    <section class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Bienvenido a TaskFlow</h2>
+      <p class="text-gray-700">
+        Aquí podrás gestionar tus tareas, organizar tu flujo de trabajo y mantener todo bajo control.
+      </p>
 
-  <main>
-    <!-- Formulario para añadir tareas -->
-    <form id="task-form" class="task-form" autocomplete="off">
-      <input id="task-input" name="task" type="text" placeholder="Añadir nueva tarea..." required>
-      <select id="task-category" name="category" aria-label="Categoría">
-        <option value="Trabajo">Trabajo</option>
-        <option value="Estudios">Estudios</option>
-        <option value="Personal">Personal</option>
-      </select>
-      <select id="task-priority" name="priority" aria-label="Prioridad">
-        <option value="Alta">Alta</option>
-        <option value="Media">Media</option>
-        <option value="Baja">Baja</option>
-      </select>
-      <button type="submit">Añadir</button>
-    </form>
-
-    <!-- Filtro de búsqueda (bonus) -->
-    <div class="search-wrap">
-      <input id="search-input" type="search" placeholder="Buscar tareas...">
-    </div>
-
-    <!-- Lista de tareas -->
-    <section class="lista-tareas" id="tasks-list" aria-live="polite">
-      <!-- Las tareas se inyectan aquí desde app.js -->
+      <div class="mt-6">
+        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+          Crear nueva tarea
+        </button>
+      </div>
     </section>
   </main>
 
-  <script src="app.js" defer></script>
+  <!-- Footer -->
+  <footer class="text-center text-gray-600 py-6">
+    © 2026 TaskFlow Project — Todos los derechos reservados.
+  </footer>
+
 </body>
 </html>
