@@ -18,6 +18,11 @@ const cancelEdit = document.getElementById("cancelEdit");
 const filterButtons = document.querySelectorAll(".filter-btn");
 let currentFilter = localStorage.getItem("taskFilter") || "all";
 
+// Buscador
+const searchInput = document.getElementById("searchInput");
+let searchQuery = "";
+
+// Modal
 let editingTaskId = null;
 
 // Animación al añadir tareas
@@ -84,15 +89,30 @@ filterButtons.forEach(btn => {
   });
 });
 
+// Buscador en tiempo real
+searchInput.addEventListener("input", e => {
+  searchQuery = e.target.value.toLowerCase();
+  renderTasks();
+});
+
 function renderTasks() {
   taskList.innerHTML = "";
 
   let tasksToShow = taskManager.tasks;
 
+  // Filtro por estado
   if (currentFilter === "pending") {
     tasksToShow = tasksToShow.filter(t => !t.completed);
   } else if (currentFilter === "completed") {
     tasksToShow = tasksToShow.filter(t => t.completed);
+  }
+
+  // Filtro por texto
+  if (searchQuery.trim() !== "") {
+    tasksToShow = tasksToShow.filter(t =>
+      t.title.toLowerCase().includes(searchQuery) ||
+      t.description.toLowerCase().includes(searchQuery)
+    );
   }
 
   tasksToShow.forEach(task => {
