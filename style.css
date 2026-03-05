@@ -9,8 +9,10 @@
   --font-main: "Segoe UI", sans-serif;
 }
 
-/* ESTILOS GENERALES */
+/* RESET BÁSICO */
 * { box-sizing: border-box; }
+
+/* ESTILOS GENERALES */
 body {
   margin: 0;
   padding: 0;
@@ -48,6 +50,7 @@ main {
   gap: .5rem;
   margin-bottom: 1rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 .task-form input[type="text"],
 .task-form input[type="search"],
@@ -67,6 +70,8 @@ main {
   cursor: pointer;
   font-weight: 600;
 }
+
+/* SEARCH */
 .search-wrap {
   margin-bottom: 1rem;
 }
@@ -150,7 +155,7 @@ main {
   100% { transform: scale(1); }
 }
 
-/* BOTÓN BORRAR */
+/* BOTONES */
 .btn-delete {
   background: transparent;
   border: 1px solid #e0e0e0;
@@ -160,9 +165,25 @@ main {
   cursor: pointer;
   margin-left: .6rem;
 }
+.btn-toggle {
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  color: #0b5fff;
+  padding: .35rem .5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: .6rem;
+}
 
-/* TAREA COMPLETADA (opcional) */
+/* TAREA COMPLETADA */
 .tarea.completada { opacity: .6; text-decoration: line-through; }
+
+/* MENSAJE VACÍO */
+.lista-tareas .tarea[aria-hidden="true"] {
+  justify-content: center;
+  opacity: 1;
+  transform: none;
+}
 
 /* MEDIA QUERY PARA MÓVILES */
 @media (max-width: 700px) {
@@ -179,4 +200,6 @@ main {
     z-index: 10;
   }
   main { margin-bottom: 120px; }
+  .task-form { gap: .4rem; }
+  .task-form input[type="text"] { flex: 1 1 100%; }
 }
