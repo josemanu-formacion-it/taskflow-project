@@ -127,41 +127,43 @@
 
   </main>
 
-  <!-- Modal de edición -->
-  <div id="editModal"
+<!-- Modal de edición -->
+<div id="editModal"
   class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition">
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition">
-      
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition">
-      <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Editar tarea</h3>
 
-      <form id="editForm" class="space-y-4">
-        <input
-          type="text"
-          id="editTitle"
-          class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-          required
-        />
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition"
+       id="editModalContent">
 
-        <textarea
-          id="editDescription"
-          class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-        ></textarea>
+    <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Editar tarea</h3>
 
-        <div class="flex justify-end gap-3">
-          <button type="button" id="cancelEdit"
-            class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-500 transition">
-            Cancelar
-          </button>
+    <form id="editForm" class="space-y-4">
+      <input
+        type="text"
+        id="editTitle"
+        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        required
+      />
 
-          <button type="submit"
-            class="px-4 py-2 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition">
-            Guardar cambios
-          </button>
-        </div>
-      </form>
-    </div>
+      <textarea
+        id="editDescription"
+        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+      ></textarea>
+
+      <div class="flex justify-end gap-3">
+        <button type="button" id="cancelEdit"
+          class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-500 transition">
+          Cancelar
+        </button>
+
+        <button type="submit"
+          class="px-4 py-2 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition">
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+
   </div>
+</div>
 
   <!-- Footer -->
   <footer class="text-center text-gray-600 dark:text-gray-400 py-8">
