@@ -146,9 +146,11 @@ main {
     border-right: none;
     border-top: 1px solid #ddd;
     border-radius: 0;
+    background: var(--color-card);
+    z-index: 10;
   }
 
   main {
-    margin-bottom: 100px;
+    margin-bottom: 120px;
   }
 }
