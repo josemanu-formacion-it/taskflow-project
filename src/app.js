@@ -7,6 +7,19 @@ const taskTitle = document.getElementById("taskTitle");
 const taskDescription = document.getElementById("taskDescription");
 const taskList = document.getElementById("taskList");
 
+// Modal
+const editModal = document.getElementById("editModal");
+const editForm = document.getElementById("editForm");
+const editTitle = document.getElementById("editTitle");
+const editDescription = document.getElementById("editDescription");
+const cancelEdit = document.getElementById("cancelEdit");
+
+// Filtros
+const filterButtons = document.querySelectorAll(".filter-btn");
+let currentFilter = localStorage.getItem("taskFilter") || "all";
+
+let editingTaskId = null;
+
 // Animación al añadir tareas
 function animateTask(element) {
   element.classList.add("opacity-0", "translate-y-2");
@@ -16,10 +29,73 @@ function animateTask(element) {
   });
 }
 
+function openModal(task) {
+  editingTaskId = task.id;
+  editTitle.value = task.title;
+  editDescription.value = task.description;
+
+  editModal.classList.remove("hidden");
+  const box = editModal.querySelector("div");
+  requestAnimationFrame(() => {
+    box.classList.remove("opacity-0", "scale-95");
+    box.classList.add("opacity-100", "scale-100");
+  });
+}
+
+function closeModal() {
+  const box = editModal.querySelector("div");
+  box.classList.add("opacity-0", "scale-95");
+  box.classList.remove("opacity-100", "scale-100");
+
+  setTimeout(() => {
+    editModal.classList.add("hidden");
+  }, 150);
+}
+
+cancelEdit.addEventListener("click", closeModal);
+
+editForm.addEventListener("submit", e => {
+  e.preventDefault();
+
+  taskManager.editTask(editingTaskId, editTitle.value, editDescription.value);
+  closeModal();
+  renderTasks();
+});
+
+// Filtro visual activo
+function updateFilterButtons() {
+  filterButtons.forEach(btn => {
+    if (btn.dataset.filter === currentFilter) {
+      btn.classList.add("bg-blue-600", "text-white", "dark:bg-blue-500");
+      btn.classList.remove("bg-gray-200", "dark:bg-gray-700");
+    } else {
+      btn.classList.remove("bg-blue-600", "text-white", "dark:bg-blue-500");
+      btn.classList.add("bg-gray-200", "dark:bg-gray-700");
+    }
+  });
+}
+
+filterButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentFilter = btn.dataset.filter;
+    localStorage.setItem("taskFilter", currentFilter);
+    updateFilterButtons();
+    renderTasks();
+  });
+});
+
 function renderTasks() {
   taskList.innerHTML = "";
 
-  taskManager.tasks.forEach(task => {
+  let tasksToShow = taskManager.tasks;
+
+  if (currentFilter === "pending") {
+    tasksToShow = tasksToShow.filter(t => !t.completed);
+  } else if (currentFilter === "completed") {
+    tasksToShow = tasksToShow.filter(t => t.completed);
+  }
+
+  tasksToShow.forEach(task => {
     const li = document.createElement("li");
 
     li.className =
@@ -90,14 +166,10 @@ taskList.addEventListener("click", e => {
   }
 
   if (e.target.classList.contains("edit")) {
-    const newTitle = prompt("Nuevo título:");
-    const newDesc = prompt("Nueva descripción:");
-
-    if (newTitle !== null) {
-      taskManager.editTask(id, newTitle, newDesc || "");
-      renderTasks();
-    }
+    const task = taskManager.tasks.find(t => t.id === id);
+    openModal(task);
   }
 });
 
+updateFilterButtons();
 renderTasks();
