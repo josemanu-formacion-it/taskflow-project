@@ -24,25 +24,63 @@
   </header>
 
   <!-- Contenido principal -->
-  <main class="max-w-5xl mx-auto px-4 py-10">
+  <main class="max-w-5xl mx-auto px-4 py-10 space-y-10">
+
+    <!-- Sección de bienvenida -->
     <section class="bg-white p-6 rounded-lg shadow-md">
       <h2 class="text-xl font-semibold mb-4">Bienvenido a TaskFlow</h2>
       <p class="text-gray-700">
         Aquí podrás gestionar tus tareas, organizar tu flujo de trabajo y mantener todo bajo control.
       </p>
-
-      <div class="mt-6">
-        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-          Crear nueva tarea
-        </button>
-      </div>
     </section>
+
+    <!-- Formulario para crear tareas -->
+    <section class="bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold mb-4">Crear nueva tarea</h3>
+
+      <form id="taskForm" class="space-y-4">
+        <input
+          type="text"
+          id="taskTitle"
+          placeholder="Título de la tarea"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+          required
+        />
+
+        <textarea
+          id="taskDescription"
+          placeholder="Descripción"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+        ></textarea>
+
+        <button
+          type="submit"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          Añadir tarea
+        </button>
+      </form>
+    </section>
+
+    <!-- Lista de tareas -->
+    <section class="bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold mb-4">Tus tareas</h3>
+
+      <ul id="taskList" class="space-y-3">
+        <!-- Las tareas se insertarán aquí dinámicamente -->
+      </ul>
+    </section>
+
   </main>
 
   <!-- Footer -->
   <footer class="text-center text-gray-600 py-6">
     © 2026 TaskFlow Project — Todos los derechos reservados.
   </footer>
+
+  <!-- Scripts de tu aplicación -->
+  <script src="src/taskManager.js"></script>
+  <script src="src/app.js"></script>
 
 </body>
 </html>
