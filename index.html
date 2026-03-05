@@ -3,40 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaskFlow Project</title>
+  <title>TaskFlow Project de José Manuel</title>
 
-  <link rel="stylesheet" href="output.css?v=2" />
-
+  <link rel="stylesheet" href="output.css?v=3" />
 </head>
 
 <body class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
 
   <!-- Header -->
   <header class="bg-white/80 dark:bg-gray-800/80 backdrop-blur shadow-md sticky top-0 z-10 transition-colors duration-300">
-    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-      <h1 class="text-3xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">TaskFlow de José Manuel</h1>
+    <div class="max-w-5xl mx-auto px-6 py-4">
 
-      <nav class="space-x-6 text-lg">
+      <!-- Título + botones -->
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">
+          TaskFlow Project de José Manuel
+        </h1>
+
+        <!-- Botones modo claro/oscuro -->
+        <div class="flex gap-2">
+          <button id="lightModeBtn"
+            class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            ☀️ Claro
+          </button>
+
+          <button id="darkModeBtn"
+            class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            🌙 Oscuro
+          </button>
+        </div>
+      </div>
+
+      <!-- Menú responsive debajo del título en móvil -->
+      <nav class="mt-4 flex gap-6 text-lg justify-center md:justify-end">
         <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Inicio</a>
         <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Tareas</a>
         <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition">Perfil</a>
       </nav>
 
-      <!-- Botones modo claro y oscuro -->
-      <div class="flex gap-2">
-        <button id="lightModeBtn"
-          class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-          ☀️
-        </button>
-
-        <button id="darkModeBtn"
-          class="px-3 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-          🌙
-        </button>
-      </div>
     </div>
-  </header>
-
   </header>
 
   <!-- Contenido principal -->
@@ -44,9 +49,7 @@
 
     <!-- Sección de bienvenida -->
     <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
-        <h2 class="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">
-        Bienvenido a TaskFlow
-        </h2>
+      <h2 class="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">Bienvenido a TaskFlow</h2>
       <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
         Gestiona tus tareas, organiza tu flujo de trabajo y mantén todo bajo control con una interfaz clara y moderna.
       </p>
@@ -54,9 +57,7 @@
 
     <!-- Formulario para crear tareas -->
     <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
-        <h3 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
-        Crear nueva tarea
-        </h3>
+      <h3 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Crear nueva tarea</h3>
 
       <form id="taskForm" class="space-y-5">
         <input
@@ -84,9 +85,7 @@
 
     <!-- Lista de tareas -->
     <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
-        <h3 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">
-        Tus tareas
-        </h3>
+      <h3 class="text-xl font-semibold mb-6 text-gray-900 dark:text-gray-100">Tus tareas</h3>
 
       <!-- Buscador -->
       <div class="mb-6">
@@ -97,6 +96,7 @@
           class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
         />
       </div>
+
       <!-- Filtros -->
       <div class="flex gap-3 mb-6">
         <button data-filter="all"
@@ -114,16 +114,50 @@
           Completadas
         </button>
       </div>
-      <ul id="taskList" class="space-y-4">
-        <!-- Las tareas se insertarán aquí dinámicamente -->
-      </ul>
+
+      <ul id="taskList" class="space-y-4"></ul>
     </section>
 
   </main>
 
+  <!-- Modal de edición -->
+  <div id="editModal"
+    class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 transition">
+    
+    <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition">
+      <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Editar tarea</h3>
+
+      <form id="editForm" class="space-y-4">
+        <input
+          type="text"
+          id="editTitle"
+          class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          required
+        />
+
+        <textarea
+          id="editDescription"
+          class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+        ></textarea>
+
+        <div class="flex justify-end gap-3">
+          <button type="button" id="cancelEdit"
+            class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-500 transition">
+            Cancelar
+          </button>
+
+          <button type="submit"
+            class="px-4 py-2 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition">
+            Guardar cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="text-center text-gray-600 dark:text-gray-400 py-8">
-    © 2026 TaskFlow Project de José Manuel — Todos los derechos reservados.
+    © 2026 TaskFlow Project — Todos los derechos reservados.
   </footer>
 
   <!-- Script principal -->
@@ -149,41 +183,6 @@
       root.classList.add("dark");
     }
   </script>
-
-<!-- Modal de edición -->
-<div id="editModal"
-  class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 transition">
-  
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition">
-    <h3 class="text-xl font-semibold mb-4">Editar tarea</h3>
-
-    <form id="editForm" class="space-y-4">
-      <input
-        type="text"
-        id="editTitle"
-        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-        required
-      />
-
-      <textarea
-        id="editDescription"
-        class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-      ></textarea>
-
-      <div class="flex justify-end gap-3">
-        <button type="button" id="cancelEdit"
-          class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200 hover:bg-gray-400 dark:hover:bg-gray-500 transition">
-          Cancelar
-        </button>
-
-        <button type="submit"
-          class="px-4 py-2 rounded-lg bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition">
-          Guardar cambios
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
 
 </body>
 </html>
