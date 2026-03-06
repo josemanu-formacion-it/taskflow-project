@@ -10,17 +10,17 @@
 
 <body class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
 
-  <!-- Vídeo de fondo -->
-  <div class="fixed inset-0 -z-50 overflow-hidden">
+  <!-- Vídeo de fondo (capa base) -->
+  <div class="fixed inset-0 z-0 overflow-hidden">
     <video autoplay muted loop playsinline class="w-full h-full object-cover">
       <source src="src/video-fondo.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- TODO EL CONTENIDO POR ENCIMA DEL VÍDEO -->
+  <!-- Todo el contenido por encima del vídeo -->
   <div class="relative z-10">
 
-    <!-- Header -->
+    <!-- Header (por encima de todo lo demás) -->
     <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-20 transition-colors duration-300">
       <div class="max-w-5xl mx-auto px-6 py-4">
 
@@ -110,7 +110,7 @@
 
     <!-- Modal -->
     <div id="editModal"
-      class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition z-20">
+      class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 transition z-30">
 
       <div id="editModalContent"
         class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition">
@@ -146,7 +146,7 @@
       </a> — Todos los derechos reservados.
     </footer>
 
-  </div> <!-- FIN DEL CONTENEDOR Z-10 -->
+  </div> <!-- fin contenedor z-10 -->
 
   <!-- Script principal -->
   <script type="module" src="src/app.js"></script>
