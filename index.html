@@ -38,12 +38,12 @@
 
           <div class="flex gap-2">
             <button id="lightModeBtn" aria-label="Modo claro"
-              class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
+              class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 text-gray-800 dark:text-gray-200 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
               ☀️
             </button>
 
             <button id="darkModeBtn" aria-label="Modo oscuro"
-              class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
+              class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 text-gray-800 dark:text-gray-200 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
               🌙
             </button>
           </div>
@@ -63,15 +63,15 @@
 
       <!-- BIENVENIDA -->
       <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
-        <h2 class="text-2xl font-bold mb-3">Bienvenido a TaskFlow</h2>
+        <h2 class="text-2xl font-bold mb-3 text-gray-800 dark:text-gray-100">Bienvenido a TaskFlow</h2>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
           Gestiona tus tareas, organiza tu flujo de trabajo y mantén todo bajo control con una interfaz clara y moderna.
         </p>
       </section>
 
-      <!-- PANEL DE ESTADÍSTICAS (NUEVO) -->
+      <!-- ESTADÍSTICAS -->
       <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
-        <h3 class="text-xl font-semibold mb-6">Estadísticas</h3>
+        <h3 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">Estadísticas</h3>
 
         <ul class="space-y-2 text-gray-800 dark:text-gray-200">
           <li>Total tareas: <span id="statTotal" class="font-bold">0</span></li>
@@ -94,18 +94,17 @@
 
       <!-- FORMULARIO -->
       <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
-        <h3 class="text-xl font-semibold mb-6">Crear nueva tarea</h3>
+        <h3 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">Crear nueva tarea</h3>
 
         <form id="taskForm" class="space-y-5">
 
-          <!-- LABELS AÑADIDOS (NUEVO) -->
-          <label for="taskTitle" class="block font-medium">Título</label>
+          <label for="taskTitle" class="block font-medium text-gray-800 dark:text-gray-200">Título</label>
           <input type="text" id="taskTitle" required
-            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 shadow-sm" />
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm" />
 
-          <label for="taskDescription" class="block font-medium">Descripción</label>
+          <label for="taskDescription" class="block font-medium text-gray-800 dark:text-gray-200">Descripción</label>
           <textarea id="taskDescription"
-            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 shadow-sm"></textarea>
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm"></textarea>
 
           <button type="submit"
             class="bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition">
@@ -116,17 +115,17 @@
 
       <!-- LISTA DE TAREAS -->
       <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
-        <h3 class="text-xl font-semibold mb-6">Tus tareas</h3>
+        <h3 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">Tus tareas</h3>
 
         <div class="mb-6">
           <input type="text" id="searchInput" placeholder="Buscar tareas..."
-            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 shadow-sm" />
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 shadow-sm" />
         </div>
 
         <div class="flex gap-3 mb-6">
-          <button data-filter="all" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">Todas</button>
-          <button data-filter="pending" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">Pendientes</button>
-          <button data-filter="completed" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">Completadas</button>
+          <button data-filter="all" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Todas</button>
+          <button data-filter="pending" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Pendientes</button>
+          <button data-filter="completed" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">Completadas</button>
         </div>
 
         <ul id="taskList" class="space-y-4"></ul>
@@ -134,13 +133,13 @@
 
     </main>
 
-    <!-- TEMPLATE DE TAREA (NUEVO) -->
+    <!-- TEMPLATE -->
     <template id="taskTemplate">
       <li class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow border border-gray-200 dark:border-gray-700 flex justify-between items-start">
         <div class="flex gap-3">
           <input type="checkbox" class="task-check mt-1" />
           <div>
-            <h4 class="task-title font-semibold"></h4>
+            <h4 class="task-title font-semibold text-gray-800 dark:text-gray-100"></h4>
             <p class="task-desc text-gray-600 dark:text-gray-300 text-sm"></p>
           </div>
         </div>
@@ -159,20 +158,20 @@
       <div id="editModalContent"
         class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition">
 
-        <h3 class="text-xl font-semibold mb-4">Editar tarea</h3>
+        <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Editar tarea</h3>
 
         <form id="editForm" class="space-y-4">
-          <label for="editTitle" class="block font-medium">Título</label>
+          <label for="editTitle" class="block font-medium text-gray-800 dark:text-gray-200">Título</label>
           <input type="text" id="editTitle" required
-            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700" />
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100" />
 
-          <label for="editDescription" class="block font-medium">Descripción</label>
+          <label for="editDescription" class="block font-medium text-gray-800 dark:text-gray-200">Descripción</label>
           <textarea id="editDescription"
-            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700"></textarea>
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100"></textarea>
 
           <div class="flex justify-end gap-3">
             <button type="button" id="cancelEdit"
-              class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600">Cancelar</button>
+              class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200">Cancelar</button>
 
             <button type="submit"
               class="px-4 py-2 rounded-lg bg-blue-600 dark:bg-blue-500 text-white">Guardar cambios</button>
@@ -183,10 +182,10 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="max-w-5xl mx-auto mt-10 mb-6 px-6 py-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/40 dark:border-gray-700/40 rounded-xl shadow-lg text-center text-white">
+    <footer class="max-w-5xl mx-auto mt-10 mb-6 px-6 py-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/40 dark:border-gray-700/40 rounded-xl shadow-lg text-center text-gray-800 dark:text-gray-100">
       © 2026 TaskFlow Project de José Manuel / FCT en 
       <a href="https://www.corner-estudios.com" target="_blank" rel="noopener noreferrer"
-        class="text-blue-300 hover:text-blue-200 font-semibold underline-offset-2 hover:underline">
+        class="text-blue-700 dark:text-blue-300 hover:underline font-semibold">
         www.corner-estudios.com
       </a>
       — Todos los derechos reservados.
