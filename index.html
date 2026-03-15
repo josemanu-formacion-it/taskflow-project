@@ -1,120 +1,222 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TaskFlow - Gestor de Tareas</title>
-  <link rel="stylesheet" href="output.css" />
+  <title>TaskFlow Project de José Manuel</title>
+
+  <style>
+    .dark .shadow-dark {
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
+    }
+  </style>
+
+  <link rel="stylesheet" href="output.css?v=3" />
 </head>
 
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 min-h-screen transition-colors duration-300">
 
-  <!-- HEADER -->
-  <header class="p-4 shadow bg-white dark:bg-gray-800 flex justify-between items-center">
-    <h1 class="text-3xl font-bold">TaskFlow</h1>
-
-    <button id="themeToggle" aria-label="Cambiar tema claro/oscuro"
-      class="p-2 rounded bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600">
-      🌙
-    </button>
-  </header>
-
-  <main class="container mx-auto p-4 flex flex-col lg:flex-row gap-6">
-
-    <!-- ASIDE: ESTADÍSTICAS -->
-    <aside class="lg:w-1/4 bg-white dark:bg-gray-800 p-4 rounded shadow h-fit">
-      <h2 class="text-xl font-semibold mb-4">Estadísticas</h2>
-
-      <ul class="space-y-2">
-        <li>Total tareas: <span id="statTotal" class="font-bold">0</span></li>
-        <li>Completadas: <span id="statCompleted" class="font-bold">0</span></li>
-        <li>Pendientes: <span id="statPending" class="font-bold">0</span></li>
-      </ul>
-
-      <div class="mt-4 flex flex-col gap-2">
-        <button id="completeAllBtn" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-          Marcar todas como completadas
-        </button>
-
-        <button id="clearCompletedBtn" class="bg-red-600 text-white p-2 rounded hover:bg-red-700">
-          Borrar tareas completadas
-        </button>
-      </div>
-    </aside>
-
-    <!-- CONTENIDO PRINCIPAL -->
-    <section class="flex-1">
-
-      <!-- FORMULARIO -->
-      <form id="taskForm" class="bg-white dark:bg-gray-800 p-4 rounded shadow mb-6">
-        <h2 class="text-xl font-semibold mb-4">Añadir nueva tarea</h2>
-
-        <label for="taskTitle" class="block mb-1">Título</label>
-        <input id="taskTitle" type="text" required
-          class="w-full p-2 mb-4 rounded bg-gray-100 dark:bg-gray-700" />
-
-        <label for="taskDescription" class="block mb-1">Descripción</label>
-        <textarea id="taskDescription" rows="3"
-          class="w-full p-2 mb-4 rounded bg-gray-100 dark:bg-gray-700"></textarea>
-
-        <button type="submit" class="bg-green-600 text-white p-2 rounded hover:bg-green-700">
-          Añadir tarea
-        </button>
-      </form>
-
-      <!-- FILTROS -->
-      <div class="flex gap-2 mb-4">
-        <button data-filter="all" class="filter-btn bg-gray-300 dark:bg-gray-700 p-2 rounded">Todas</button>
-        <button data-filter="pending" class="filter-btn bg-gray-300 dark:bg-gray-700 p-2 rounded">Pendientes</button>
-        <button data-filter="completed" class="filter-btn bg-gray-300 dark:bg-gray-700 p-2 rounded">Completadas</button>
-      </div>
-
-      <!-- BUSCADOR -->
-      <input id="searchInput" type="text" placeholder="Buscar tareas..."
-        class="w-full p-2 mb-4 rounded bg-gray-100 dark:bg-gray-700" />
-
-      <!-- LISTA DE TAREAS -->
-      <section id="taskList" class="space-y-3"></section>
-
-    </section>
-  </main>
-
-  <!-- TEMPLATE DE TAREA -->
-  <template id="taskTemplate">
-    <article class="task-item bg-white dark:bg-gray-800 p-4 rounded shadow flex justify-between items-start">
-      <div class="flex items-start gap-3">
-        <input type="checkbox" class="task-check mt-1" />
-        <div>
-          <h3 class="task-title font-semibold"></h3>
-          <p class="task-desc text-sm opacity-80"></p>
-        </div>
-      </div>
-
-      <div class="flex gap-2">
-        <button class="edit-btn text-blue-600 hover:underline" aria-label="Editar tarea">Editar</button>
-        <button class="delete-btn text-red-600 hover:underline" aria-label="Eliminar tarea">Eliminar</button>
-      </div>
-    </article>
-  </template>
-
-  <!-- MODAL DE EDICIÓN -->
-  <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center" role="dialog" aria-modal="true">
-    <div class="bg-white dark:bg-gray-800 p-6 rounded shadow w-80">
-      <h2 class="text-xl font-semibold mb-4">Editar tarea</h2>
-
-      <label for="editTitle" class="block mb-1">Título</label>
-      <input id="editTitle" type="text" class="w-full p-2 mb-4 rounded bg-gray-100 dark:bg-gray-700" />
-
-      <label for="editDescription" class="block mb-1">Descripción</label>
-      <textarea id="editDescription" rows="3" class="w-full p-2 mb-4 rounded bg-gray-100 dark:bg-gray-700"></textarea>
-
-      <div class="flex justify-end gap-2">
-        <button id="cancelEdit" class="p-2 bg-gray-300 dark:bg-gray-700 rounded">Cancelar</button>
-        <button id="saveEdit" class="p-2 bg-blue-600 text-white rounded">Guardar</button>
-      </div>
-    </div>
+  <!-- VIDEO DE FONDO -->
+  <div class="fixed inset-0 z-0 overflow-hidden">
+    <video autoplay muted loop playsinline class="w-full h-full object-cover">
+      <source src="src/video-fondo.mp4" type="video/mp4">
+    </video>
+    <div class="absolute inset-0 bg-white/10 dark:bg-transparent"></div>
   </div>
 
+  <div class="relative z-10">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-20 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border-b border-white/40 dark:border-gray-700/40 rounded-b-xl shadow-lg transition">
+      <div class="max-w-5xl mx-auto px-6 py-4">
+
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-extrabold text-gray-800 dark:text-blue-400 tracking-tight shadow-dark"
+              style="text-shadow: 0 2px 6px rgb(9, 80, 53);">
+            TaskFlow Project
+          </h1>
+
+          <div class="flex gap-2">
+            <button id="lightModeBtn" aria-label="Modo claro"
+              class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
+              ☀️
+            </button>
+
+            <button id="darkModeBtn" aria-label="Modo oscuro"
+              class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
+              🌙
+            </button>
+          </div>
+        </div>
+
+        <nav class="mt-4 flex gap-6 text-lg justify-center">
+          <a href="#" class="font-semibold text-gray-800 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition shadow-dark">Inicio</a>
+          <a href="#" class="font-semibold text-gray-800 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition shadow-dark">Tareas</a>
+          <a href="#" class="font-semibold text-gray-800 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition shadow-dark">Perfil</a>
+        </nav>
+
+      </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-5xl mx-auto px-6 py-10 space-y-10">
+
+      <!-- BIENVENIDA -->
+      <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
+        <h2 class="text-2xl font-bold mb-3">Bienvenido a TaskFlow</h2>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+          Gestiona tus tareas, organiza tu flujo de trabajo y mantén todo bajo control con una interfaz clara y moderna.
+        </p>
+      </section>
+
+      <!-- PANEL DE ESTADÍSTICAS (NUEVO) -->
+      <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
+        <h3 class="text-xl font-semibold mb-6">Estadísticas</h3>
+
+        <ul class="space-y-2 text-gray-800 dark:text-gray-200">
+          <li>Total tareas: <span id="statTotal" class="font-bold">0</span></li>
+          <li>Completadas: <span id="statCompleted" class="font-bold">0</span></li>
+          <li>Pendientes: <span id="statPending" class="font-bold">0</span></li>
+        </ul>
+
+        <div class="mt-6 flex gap-3">
+          <button id="completeAllBtn"
+            class="px-4 py-2 rounded-lg bg-green-600 dark:bg-green-500 text-white hover:bg-green-700 dark:hover:bg-green-600 transition">
+            Marcar todas como completadas
+          </button>
+
+          <button id="clearCompletedBtn"
+            class="px-4 py-2 rounded-lg bg-red-600 dark:bg-red-500 text-white hover:bg-red-700 dark:hover:bg-red-600 transition">
+            Borrar completadas
+          </button>
+        </div>
+      </section>
+
+      <!-- FORMULARIO -->
+      <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
+        <h3 class="text-xl font-semibold mb-6">Crear nueva tarea</h3>
+
+        <form id="taskForm" class="space-y-5">
+
+          <!-- LABELS AÑADIDOS (NUEVO) -->
+          <label for="taskTitle" class="block font-medium">Título</label>
+          <input type="text" id="taskTitle" required
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 shadow-sm" />
+
+          <label for="taskDescription" class="block font-medium">Descripción</label>
+          <textarea id="taskDescription"
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 shadow-sm"></textarea>
+
+          <button type="submit"
+            class="bg-blue-600 dark:bg-blue-500 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 dark:hover:bg-blue-600 transition">
+            Añadir tarea
+          </button>
+        </form>
+      </section>
+
+      <!-- LISTA DE TAREAS -->
+      <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
+        <h3 class="text-xl font-semibold mb-6">Tus tareas</h3>
+
+        <div class="mb-6">
+          <input type="text" id="searchInput" placeholder="Buscar tareas..."
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700 shadow-sm" />
+        </div>
+
+        <div class="flex gap-3 mb-6">
+          <button data-filter="all" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">Todas</button>
+          <button data-filter="pending" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">Pendientes</button>
+          <button data-filter="completed" class="filter-btn px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700">Completadas</button>
+        </div>
+
+        <ul id="taskList" class="space-y-4"></ul>
+      </section>
+
+    </main>
+
+    <!-- TEMPLATE DE TAREA (NUEVO) -->
+    <template id="taskTemplate">
+      <li class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow border border-gray-200 dark:border-gray-700 flex justify-between items-start">
+        <div class="flex gap-3">
+          <input type="checkbox" class="task-check mt-1" />
+          <div>
+            <h4 class="task-title font-semibold"></h4>
+            <p class="task-desc text-gray-600 dark:text-gray-300 text-sm"></p>
+          </div>
+        </div>
+
+        <div class="flex gap-3">
+          <button class="edit-btn text-blue-600 dark:text-blue-400 hover:underline" aria-label="Editar tarea">Editar</button>
+          <button class="delete-btn text-red-600 dark:text-red-400 hover:underline" aria-label="Eliminar tarea">Eliminar</button>
+        </div>
+      </li>
+    </template>
+
+    <!-- MODAL -->
+    <div id="editModal"
+      class="fixed inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-30">
+
+      <div id="editModalContent"
+        class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-gray-200 dark:border-gray-700 transform scale-95 opacity-0 transition">
+
+        <h3 class="text-xl font-semibold mb-4">Editar tarea</h3>
+
+        <form id="editForm" class="space-y-4">
+          <label for="editTitle" class="block font-medium">Título</label>
+          <input type="text" id="editTitle" required
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700" />
+
+          <label for="editDescription" class="block font-medium">Descripción</label>
+          <textarea id="editDescription"
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 bg-white dark:bg-gray-700"></textarea>
+
+          <div class="flex justify-end gap-3">
+            <button type="button" id="cancelEdit"
+              class="px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-600">Cancelar</button>
+
+            <button type="submit"
+              class="px-4 py-2 rounded-lg bg-blue-600 dark:bg-blue-500 text-white">Guardar cambios</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="max-w-5xl mx-auto mt-10 mb-6 px-6 py-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/40 dark:border-gray-700/40 rounded-xl shadow-lg text-center text-white">
+      © 2026 TaskFlow Project de José Manuel / FCT en 
+      <a href="https://www.corner-estudios.com" target="_blank" rel="noopener noreferrer"
+        class="text-blue-300 hover:text-blue-200 font-semibold underline-offset-2 hover:underline">
+        www.corner-estudios.com
+      </a>
+      — Todos los derechos reservados.
+    </footer>
+
+  </div>
+
+  <!-- JS PRINCIPAL -->
   <script type="module" src="src/app.js"></script>
+
+  <!-- MODO CLARO/OSCURO -->
+  <script>
+    const root = document.documentElement;
+    const lightBtn = document.getElementById("lightModeBtn");
+    const darkBtn = document.getElementById("darkModeBtn");
+
+    lightBtn.addEventListener("click", () => {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    });
+
+    darkBtn.addEventListener("click", () => {
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    });
+
+    if (localStorage.getItem("theme") === "dark") {
+      root.classList.add("dark");
+    }
+  </script>
+
 </body>
 </html>
