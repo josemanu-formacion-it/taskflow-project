@@ -47,4 +47,28 @@ export default class TaskManager {
       this.saveTasks();
     }
   }
+
+  // NUEVO: marcar todas como completadas
+  completeAll() {
+    this.tasks = this.tasks.map(task => ({
+      ...task,
+      completed: true
+    }));
+    this.saveTasks();
+  }
+
+  // NUEVO: borrar todas las completadas
+  clearCompleted() {
+    this.tasks = this.tasks.filter(task => !task.completed);
+    this.saveTasks();
+  }
+
+  // NUEVO: estadísticas (opcional, app.js ya las calcula)
+  getStats() {
+    const total = this.tasks.length;
+    const completed = this.tasks.filter(t => t.completed).length;
+    const pending = total - completed;
+
+    return { total, completed, pending };
+  }
 }

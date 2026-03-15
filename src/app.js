@@ -2,10 +2,25 @@ import TaskManager from "./taskManager.js";
 
 const taskManager = new TaskManager();
 
+// Formulario
 const taskForm = document.getElementById("taskForm");
 const taskTitle = document.getElementById("taskTitle");
 const taskDescription = document.getElementById("taskDescription");
+
+// Lista
 const taskList = document.getElementById("taskList");
+
+// Template
+const taskTemplate = document.getElementById("taskTemplate");
+
+// Estadísticas
+const statTotal = document.getElementById("statTotal");
+const statCompleted = document.getElementById("statCompleted");
+const statPending = document.getElementById("statPending");
+
+// Botones extra
+const completeAllBtn = document.getElementById("completeAllBtn");
+const clearCompletedBtn = document.getElementById("clearCompletedBtn");
 
 // Modal
 const editModal = document.getElementById("editModal");
@@ -13,6 +28,7 @@ const editForm = document.getElementById("editForm");
 const editTitle = document.getElementById("editTitle");
 const editDescription = document.getElementById("editDescription");
 const cancelEdit = document.getElementById("cancelEdit");
+let editingTaskId = null;
 
 // Filtros
 const filterButtons = document.querySelectorAll(".filter-btn");
@@ -21,9 +37,6 @@ let currentFilter = localStorage.getItem("taskFilter") || "all";
 // Buscador
 const searchInput = document.getElementById("searchInput");
 let searchQuery = "";
-
-// Modal
-let editingTaskId = null;
 
 // Animación al añadir tareas
 function animateTask(element) {
@@ -34,6 +47,7 @@ function animateTask(element) {
   });
 }
 
+// Modal
 function openModal(task) {
   editingTaskId = task.id;
   editTitle.value = task.title;
@@ -89,12 +103,35 @@ filterButtons.forEach(btn => {
   });
 });
 
-// Buscador en tiempo real
+// Buscador
 searchInput.addEventListener("input", e => {
   searchQuery = e.target.value.toLowerCase();
   renderTasks();
 });
 
+// Estadísticas
+function updateStats() {
+  const tasks = taskManager.tasks;
+  const completed = tasks.filter(t => t.completed).length;
+
+  statTotal.textContent = tasks.length;
+  statCompleted.textContent = completed;
+  statPending.textContent = tasks.length - completed;
+}
+
+// Botón: marcar todas como completadas
+completeAllBtn.addEventListener("click", () => {
+  taskManager.completeAll();
+  renderTasks();
+});
+
+// Botón: borrar completadas
+clearCompletedBtn.addEventListener("click", () => {
+  taskManager.clearCompleted();
+  renderTasks();
+});
+
+// Renderizado con template
 function renderTasks() {
   taskList.innerHTML = "";
 
@@ -116,44 +153,31 @@ function renderTasks() {
   }
 
   tasksToShow.forEach(task => {
-    const li = document.createElement("li");
+    const clone = taskTemplate.content.cloneNode(true);
+    const li = clone.querySelector("li");
 
-    li.className =
-      "p-5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow transition hover:shadow-md flex justify-between items-start gap-4 opacity-0 translate-y-2";
+    // Título y descripción
+    clone.querySelector(".task-title").textContent = task.title;
+    clone.querySelector(".task-desc").textContent = task.description || "";
 
-    li.innerHTML = `
-      <div class="flex-1 space-y-1">
-        <h4 class="font-semibold text-lg ${
-          task.completed ? "line-through text-gray-500 dark:text-gray-400" : "text-gray-900 dark:text-gray-100"
-        }">
-          ${task.title}
-        </h4>
-        <p class="text-gray-600 dark:text-gray-300 text-sm">${task.description || ""}</p>
-      </div>
+    // Estilo si está completada
+    if (task.completed) {
+      clone.querySelector(".task-title").classList.add("line-through", "text-gray-500", "dark:text-gray-400");
+    }
 
-      <div class="flex gap-2">
-        <button data-id="${task.id}"
-          class="toggle px-3 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition shadow">
-          ✔
-        </button>
+    // Botones
+    clone.querySelector(".task-check").dataset.id = task.id;
+    clone.querySelector(".edit-btn").dataset.id = task.id;
+    clone.querySelector(".delete-btn").dataset.id = task.id;
 
-        <button data-id="${task.id}"
-          class="edit px-3 py-2 rounded-lg bg-yellow-500 text-white hover:bg-yellow-600 transition shadow">
-          ✎
-        </button>
-
-        <button data-id="${task.id}"
-          class="delete px-3 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition shadow">
-          🗑
-        </button>
-      </div>
-    `;
-
-    taskList.appendChild(li);
+    taskList.appendChild(clone);
     animateTask(li);
   });
+
+  updateStats();
 }
 
+// Crear tarea
 taskForm.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -168,10 +192,13 @@ taskForm.addEventListener("submit", e => {
   taskForm.reset();
 });
 
+// Delegación de eventos
 taskList.addEventListener("click", e => {
   const id = e.target.dataset.id;
 
-  if (e.target.classList.contains("delete")) {
+  if (!id) return;
+
+  if (e.target.classList.contains("delete-btn")) {
     const li = e.target.closest("li");
     li.classList.add("opacity-0", "translate-y-2");
     setTimeout(() => {
@@ -180,12 +207,12 @@ taskList.addEventListener("click", e => {
     }, 200);
   }
 
-  if (e.target.classList.contains("toggle")) {
+  if (e.target.classList.contains("task-check")) {
     taskManager.toggleTask(id);
     renderTasks();
   }
 
-  if (e.target.classList.contains("edit")) {
+  if (e.target.classList.contains("edit-btn")) {
     const task = taskManager.tasks.find(t => t.id === id);
     openModal(task);
   }
