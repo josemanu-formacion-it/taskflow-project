@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Opcional: variables CSS para cumplir el ejercicio */
+:root {
+  --radius: 0.75rem;
+  --transition: 0.2s ease;
+}
+
+/* Opcional: mejora accesibilidad del focus */
+*:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
