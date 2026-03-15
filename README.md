@@ -111,7 +111,7 @@ Cambios clave:
 
 ## 📁 Estructura del proyecto
 
-`taskflow-project/
+taskflow-project/
 ├── index.html
 ├── input.css
 ├── output.css
@@ -125,7 +125,7 @@ Cambios clave:
 │         └── wireframe.png
 └── src/
 ├── app.js
-└── taskManager.js`
+└── taskManager.js
 
 
 ---
