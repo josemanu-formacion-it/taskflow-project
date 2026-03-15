@@ -111,22 +111,23 @@ Cambios clave:
 
 ## 📁 Estructura del proyecto
 
+```
 taskflow-project/
-├── index.html
-├── input.css
-├── output.css
-├── tailwind.config.js
-├── postcss.config.js
-├── package.json
-├── package-lock.json
-├── node_modules/
-├── docs/
-│    └── design/
-│         └── wireframe.png
-└── src/
-├── app.js
-└── taskManager.js
-
+ ├── index.html
+ ├── input.css
+ ├── output.css
+ ├── tailwind.config.js
+ ├── postcss.config.js
+ ├── package.json
+ ├── package-lock.json
+ ├── node_modules/
+ ├── docs/
+ │    └── design/
+ │         └── wireframe.png
+ └── src/
+      ├── app.js
+      └── taskManager.js
+```
 
 ---
 
