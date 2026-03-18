@@ -68,7 +68,10 @@
       }
 
       footer {
-        font-size: 0.7rem !important;
+        font-size: 0.55rem !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
       }
     }
   </style>
@@ -279,7 +282,8 @@
     </div>
 
     <!-- FOOTER -->
-      <footer class="mx-auto mt-10 mb-6 px-6 py-6 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/40 dark:border-gray-700/40 rounded-xl shadow-lg text-center text-black dark:text-white" style="width: 65%; max-width: 100%;">       © 2026 TaskFlow Project de José Manuel / FCT en 
+      <footer class="mx-auto mt-10 mb-6 px-6 py-4 bg-white/30 dark:bg-gray-800/30 backdrop-blur-md border border-white/40 dark:border-gray-700/40 rounded-xl shadow-lg text-center text-black dark:text-white whitespace-nowrap overflow-hidden text-ellipsis" style="width: 65%; max-width: 100%;">
+        © 2026 TaskFlow Project de José Manuel / FCT en 
       <a href="https://www.corner-estudios.com" target="_blank" rel="noopener noreferrer"
         class="text-blue-700 dark:text-blue-300 hover:underline font-semibold">
         www.corner-estudios.com
@@ -336,6 +340,6 @@
       }
     });
   </script>
-  
+
 </body>
 </html>
