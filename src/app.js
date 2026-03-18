@@ -165,8 +165,11 @@ function renderTasks() {
       clone.querySelector(".task-title").classList.add("line-through", "text-gray-500", "dark:text-gray-400");
     }
 
-    // Botones
-    clone.querySelector(".task-check").dataset.id = task.id;
+    // Checkbox con estado correcto
+    const checkbox = clone.querySelector(".task-check");
+    checkbox.dataset.id = task.id;
+    checkbox.checked = task.completed;
+
     clone.querySelector(".edit-btn").dataset.id = task.id;
     clone.querySelector(".delete-btn").dataset.id = task.id;
 
@@ -192,7 +195,16 @@ taskForm.addEventListener("submit", e => {
   taskForm.reset();
 });
 
-// Delegación de eventos
+// Delegación de eventos para change (checkbox)
+taskList.addEventListener("change", e => {
+  if (e.target.classList.contains("task-check")) {
+    const id = e.target.dataset.id;
+    taskManager.toggleTask(id);
+    renderTasks();
+  }
+});
+
+// Delegación de eventos para click (editar y eliminar)
 taskList.addEventListener("click", e => {
   const id = e.target.dataset.id;
 
@@ -205,11 +217,6 @@ taskList.addEventListener("click", e => {
       taskManager.deleteTask(id);
       renderTasks();
     }, 200);
-  }
-
-  if (e.target.classList.contains("task-check")) {
-    taskManager.toggleTask(id);
-    renderTasks();
   }
 
   if (e.target.classList.contains("edit-btn")) {
