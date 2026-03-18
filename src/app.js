@@ -38,6 +38,34 @@ let currentFilter = localStorage.getItem("taskFilter") || "all";
 const searchInput = document.getElementById("searchInput");
 let searchQuery = "";
 
+// Gráfica
+let statsChart = null;
+
+function initChart() {
+  const ctx = document.getElementById("statsChart").getContext("2d");
+  statsChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+      labels: ["Completadas", "Pendientes"],
+      datasets: [{
+        data: [0, 0],
+        backgroundColor: ["#86efac", "#fca5a5"],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: { font: { size: 12 }, padding: 12 }
+        }
+      }
+    }
+  });
+}
+
 // Animación al añadir tareas
 function animateTask(element) {
   element.classList.add("opacity-0", "translate-y-2");
@@ -113,10 +141,16 @@ searchInput.addEventListener("input", e => {
 function updateStats() {
   const tasks = taskManager.tasks;
   const completed = tasks.filter(t => t.completed).length;
+  const pending = tasks.length - completed;
 
   statTotal.textContent = tasks.length;
   statCompleted.textContent = completed;
-  statPending.textContent = tasks.length - completed;
+  statPending.textContent = pending;
+
+  if (statsChart) {
+    statsChart.data.datasets[0].data = [completed, pending];
+    statsChart.update();
+  }
 }
 
 // Botón: marcar todas como completadas
@@ -225,5 +259,6 @@ taskList.addEventListener("click", e => {
   }
 });
 
+initChart();
 updateFilterButtons();
 renderTasks();
