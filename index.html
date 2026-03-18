@@ -82,22 +82,32 @@
       <section class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 transition">
         <h3 class="text-xl font-semibold mb-6 text-gray-800 dark:text-gray-100">Estadísticas</h3>
 
-        <ul class="space-y-2 text-gray-800 dark:text-gray-200">
-          <li>Total tareas: <span id="statTotal" class="font-bold">0</span></li>
-          <li>Completadas: <span id="statCompleted" class="font-bold">0</span></li>
-          <li>Pendientes: <span id="statPending" class="font-bold">0</span></li>
-        </ul>
+        <div class="flex flex-col md:flex-row gap-8 items-center">
 
-        <div class="mt-6 flex gap-3">
-          <button id="completeAllBtn"
-            class="px-4 py-2 rounded-lg bg-green-300 dark:bg-green-800 text-gray-800 dark:text-gray-100 hover:bg-green-400 dark:hover:bg-green-700 transition">
-            Marcar todas como completadas
-          </button>
+          <div class="flex-1 space-y-2 text-gray-800 dark:text-gray-200">
+            <ul class="space-y-2">
+              <li>Total tareas: <span id="statTotal" class="font-bold">0</span></li>
+              <li>Completadas: <span id="statCompleted" class="font-bold">0</span></li>
+              <li>Pendientes: <span id="statPending" class="font-bold">0</span></li>
+            </ul>
 
-          <button id="clearCompletedBtn"
-            class="px-4 py-2 rounded-lg bg-red-300 dark:bg-red-800 text-gray-800 dark:text-gray-100 hover:bg-red-400 dark:hover:bg-red-700 transition">
-            Borrar completadas
-          </button>
+            <div class="mt-6 flex gap-3 flex-wrap">
+              <button id="completeAllBtn"
+                class="px-4 py-2 rounded-lg bg-green-300 dark:bg-green-800 text-gray-800 dark:text-gray-100 hover:bg-green-400 dark:hover:bg-green-700 transition">
+                Marcar todas como completadas
+              </button>
+
+              <button id="clearCompletedBtn"
+                class="px-4 py-2 rounded-lg bg-red-300 dark:bg-red-800 text-gray-800 dark:text-gray-100 hover:bg-red-400 dark:hover:bg-red-700 transition">
+                Borrar completadas
+              </button>
+            </div>
+          </div>
+
+          <div class="w-48 h-48 flex-shrink-0">
+            <canvas id="statsChart"></canvas>
+          </div>
+
         </div>
       </section>
 
@@ -203,6 +213,7 @@
   </div>
 
   <!-- JS PRINCIPAL -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
   <script type="module" src="src/app.js"></script>
 
   <!-- MODO CLARO/OSCURO -->
