@@ -31,21 +31,17 @@
       <div class="max-w-5xl mx-auto px-6 py-4">
 
         <div class="flex items-center justify-between">
-          <h1 class="text-3xl font-extrabold text-gray-800 dark:text-blue-400 tracking-tight shadow-dark"
-              style="text-shadow: 0 2px 6px rgb(9, 80, 53);">
+          <h1 class="text-3xl font-extrabold text-blue-400 tracking-tight"
+              style="text-shadow: 0 2px 6px rgba(9, 80, 53, 0.3);">
             TaskFlow Project
           </h1>
 
           <div class="flex gap-2">
-            <button id="lightModeBtn" aria-label="Modo claro"
-              class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 text-gray-800 dark:text-gray-200 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
-              ☀️
-            </button>
-
-            <button id="darkModeBtn" aria-label="Modo oscuro"
+            <button id="toggleModeBtn" aria-label="Cambiar modo"
               class="px-3 py-2 rounded-lg bg-gray-200/60 dark:bg-gray-700/60 text-gray-800 dark:text-gray-200 hover:bg-gray-300/70 dark:hover:bg-gray-600/70 transition">
               🌙
             </button>
+          </div>
           </div>
         </div>
 
@@ -199,22 +195,23 @@
   <!-- MODO CLARO/OSCURO -->
   <script>
     const root = document.documentElement;
-    const lightBtn = document.getElementById("lightModeBtn");
-    const darkBtn = document.getElementById("darkModeBtn");
+    const toggleBtn = document.getElementById("toggleModeBtn");
 
-    lightBtn.addEventListener("click", () => {
-      root.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    });
+    function updateIcon() {
+      toggleBtn.textContent = root.classList.contains("dark") ? "☀️" : "🌙";
+    }
 
-    darkBtn.addEventListener("click", () => {
-      root.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+    toggleBtn.addEventListener("click", () => {
+      root.classList.toggle("dark");
+      localStorage.setItem("theme", root.classList.contains("dark") ? "dark" : "light");
+      updateIcon();
     });
 
     if (localStorage.getItem("theme") === "dark") {
       root.classList.add("dark");
     }
+
+    updateIcon();
   </script>
 
 </body>
