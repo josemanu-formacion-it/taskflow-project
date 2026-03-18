@@ -25,6 +25,48 @@
     html.dark .shadow-nav {
       text-shadow: 0 0 8px rgba(147, 197, 253, 0.9), 0 0 16px rgba(147, 197, 253, 0.5);
     }
+    @media (max-width: 768px) {
+      header > div,
+      main,
+      footer {
+        width: 92% !important;
+      }
+
+      h1 {
+        font-size: 1.4rem !important;
+      }
+
+      nav a {
+        font-size: 0.9rem !important;
+      }
+
+      main section {
+        padding: 1.2rem !important;
+      }
+
+      h2, h3 {
+        font-size: 1rem !important;
+      }
+
+      #statsChart {
+        width: 120px !important;
+        height: 120px !important;
+      }
+
+      .flex.flex-col.md\:flex-row {
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+
+      button {
+        font-size: 0.8rem !important;
+        padding: 0.4rem 0.8rem !important;
+      }
+
+      footer {
+        font-size: 0.8rem !important;
+      }
+    }
   </style>
 
   <link rel="stylesheet" href="output.css?v=3" />
