@@ -114,7 +114,6 @@ Cambios clave:
 ```
 taskflow-project/
  ├── index.html
- ├── index.html_old              (versión anterior / backup)
  ├── input.css                    (entrada Tailwind)
  ├── output.css                   (CSS generado por Tailwind)
  ├── style.css                    (CSS clásico, ahora residual)
