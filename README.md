@@ -131,7 +131,6 @@ taskflow-project/
  └── src/
       ├── app.js                  (lógica de UI, eventos, render)
       └── taskManager.js          (gestión de tareas, datos, LocalStorage)
-
 ```
 
 ---
