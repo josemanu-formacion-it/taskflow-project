@@ -114,19 +114,25 @@ Cambios clave:
 ```
 taskflow-project/
  ├── index.html
- ├── input.css
- ├── output.css
+ ├── index.html_old              (versión anterior / backup)
+ ├── input.css                    (entrada Tailwind)
+ ├── output.css                   (CSS generado por Tailwind)
+ ├── style.css                    (CSS clásico, ahora residual)
  ├── tailwind.config.js
  ├── postcss.config.js
  ├── package.json
  ├── package-lock.json
  ├── node_modules/
+ ├── .gitattributes
+ ├── .gitignore                   (para Node, SO, editor, etc.)
+ ├── README.md
  ├── docs/
  │    └── design/
  │         └── wireframe.png
  └── src/
-      ├── app.js
-      └── taskManager.js
+      ├── app.js                  (lógica de UI, eventos, render)
+      └── taskManager.js          (gestión de tareas, datos, LocalStorage)
+
 ```
 
 ---
