@@ -24,6 +24,18 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Algo salió muy mal en el servidor' });
 });
 
-app.listen(port, () => {
-    console.log(`🚀 Servidor TaskFlow corriendo en http://localhost:${port}`);
-});
+// --- ESTO ERA LO QUE TENÍA ANTES ---
+// app.listen(port, () => {
+//    console.log(`🚀 Servidor TaskFlow corriendo en http://localhost:${port}`);
+// });
+
+// --- LO CAMBIO POR ESTO ---
+// Si estoy en desarrollo local, escucho en el puerto. 
+// Si estoy en Vercel, exporto la app para que se ejecute como función Serverless.
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(port, () => {
+        console.log(`🚀 Servidor TaskFlow corriendo en http://localhost:${port}`);
+    });
+}
+
+module.exports = app;
