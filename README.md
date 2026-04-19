@@ -1,256 +1,89 @@
-# 📝 TaskFlow — Gestor de Tareas con Tailwind, LocalStorage y Modo Oscuro
+# 📝 TaskFlow — Gestor de Tareas Full-Stack (Tailwind + Node.js/Express)
 
-TaskFlow es una aplicación web desarrollada como proyecto práctico del bootcamp, cuyo objetivo es construir un gestor de tareas completo aplicando buenas prácticas de HTML semántico, diseño responsive, arquitectura modular en JavaScript, persistencia con LocalStorage y migración total a Tailwind CSS. Incluye funcionalidades avanzadas como filtros, buscador en tiempo real, edición mediante modal, estadísticas dinámicas, animaciones suaves y modo oscuro persistente.
+TaskFlow es una aplicación web desarrollada como proyecto práctico del bootcamp. Ha evolucionado de ser un proyecto puramente frontend (con LocalStorage) a una **aplicación Full-Stack** con arquitectura cliente-servidor. El proyecto aplica buenas prácticas de diseño responsive, migración a Tailwind CSS, y un backend robusto construido con Node.js y Express utilizando una arquitectura por capas.
 
 ---
 
 ## 🎯 Objetivos del proyecto
 
-Este proyecto cumple todos los requisitos del ejercicio:
+Este proyecto cumple todos los requisitos desde la Fase 1 hasta la Fase 3:
 
 1. Configuración del entorno (Git, GitHub, ramas, .gitignore, README).
-2. Planificación y diseño previo (wireframe + explicación).
-3. HTML semántico validado.
-4. Layout responsive con CSS (migrado a Tailwind).
-5. Adaptación móvil completa.
-6. Lógica en JavaScript modular.
-7. Persistencia con LocalStorage.
-8. Funcionalidades extra (filtros, búsqueda, edición, botones globales).
-9. Migración completa a Tailwind + modo oscuro.
-10. Testing manual documentado.
-11. Accesibilidad básica.
-12. Despliegue en Vercel.
+2. HTML semántico validado y Layout responsive con Tailwind CSS.
+3. Lógica en JavaScript modular en el frontend.
+4. Funcionalidades extra (filtros, búsqueda, edición, botones globales).
+5. Migración completa a Tailwind + modo oscuro persistente.
+6. **[Fase 3]** Creación de una API RESTful con Node.js y Express.
+7. **[Fase 3]** Arquitectura backend por capas (Rutas, Controladores, Servicios).
+8. **[Fase 3]** Sustitución de LocalStorage por peticiones HTTP asíncronas (`fetch`).
+9. **[Fase 3]** Manejo global de errores y validación defensiva en la red.
+10. **[Fase 3]** Configuración avanzada de despliegue Serverless en Vercel.
 
 ---
 
-## 🧩 Planificación y diseño
+## 🏗️ Arquitectura Backend (Fase 3)
 
-### ✏️ Wireframe inicial
+En su última iteración, la aplicación abandonó el almacenamiento local en el navegador para consumir una API RESTful propia. Se ha implementado una **Arquitectura por Capas (Layered Architecture)** para garantizar la separación de responsabilidades:
 
-El diseño se realizó previamente en papel/Figma, definiendo:
-
-- Cabecera con título y selector de modo oscuro.
-- Formulario para añadir tareas.
-- Lista principal de tareas.
-- Panel lateral con estadísticas.
-- Filtros y buscador.
-- Modal para edición.
-
-El wireframe se encuentra en:
-
-`docs/design/wireframe.png`
-
-
-### 🧠 Decisiones de diseño
-
-- Layout dividido en contenido principal + panel lateral.
-- Tarjetas con sombras suaves y bordes redondeados.
-- Modo oscuro basado en clase `dark`.
-- Animaciones suaves al añadir/eliminar tareas.
-- Interfaz limpia y minimalista.
-
----
-
-## 🏗️ HTML semántico
-
-El proyecto utiliza:
-
-- `<header>`, `<main>`, `<section>`, `<aside>`, `<footer>`
-- Un único `<h1>`
-- Labels correctamente asociados
-- Template `<template>` para renderizar tareas
-- Validación con W3C sin errores
-
----
-
-## 📱 Diseño responsive
-
-El diseño se adapta a:
-
-- Móviles
-- Tablets
-- Escritorio
-
-Cambios clave:
-
-- El panel lateral pasa debajo del contenido en pantallas pequeñas.
-- El formulario se reorganiza verticalmente.
-- Botones y tarjetas se ajustan automáticamente con Tailwind.
+* **Capa de Enrutamiento (`routes/`):** Define los endpoints de la API y los verbos HTTP. Delega la ejecución.
+* **Capa de Controladores (`controllers/`):** Extrae datos de la red (`req.body`), aplica validación estricta en la frontera de red y formatea la respuesta (códigos HTTP 200, 201, 204, 400, 404, 500).
+* **Capa de Servicios (`services/`):** Contiene la lógica de negocio pura. Desconoce por completo el contexto HTTP.
+* **Middlewares:** `express.json()` para parseo, `cors()` para seguridad, y un **Manejador Global de Errores** para evitar la caída del servidor.
 
 ---
 
 ## ✨ Funcionalidades principales
 
-- Crear tareas con título y descripción.
-- Editar tareas mediante modal.
-- Eliminar tareas con animación.
-- Marcar tareas como completadas.
-- Filtros dinámicos: todas / pendientes / completadas.
-- Buscador en tiempo real.
-- Botón “Marcar todas como completadas”.
-- Botón “Eliminar completadas”.
-- Estadísticas: total / completadas / pendientes.
-- Persistencia con LocalStorage.
-- Modo oscuro con persistencia.
+- **API RESTful:** Creación, lectura y eliminación de tareas a través de red.
+- **Estados de UI:** Feedback visual durante la carga y manejo de errores de conexión.
+- Filtros dinámicos (todas / pendientes / completadas) y buscador en tiempo real.
+- Estadísticas dinámicas (total / completadas / pendientes).
+- Modo oscuro persistente.
 - Animaciones suaves.
 - Renderizado mediante `<template>`.
-- Arquitectura modular (`src/app.js` + `src/taskManager.js`).
+- Arquitectura modular frontend (`app.js`, `taskManager.js`, `api/client.js`).
 
 ---
 
 ## 🛠️ Tecnologías utilizadas
 
+### Frontend
 - HTML5 semántico
-- JavaScript ES Modules
-- Tailwind CSS
-- PostCSS + Autoprefixer
-- LocalStorage
-- Vercel
+- JavaScript ES Modules (`async/await`, `fetch`)
+- Tailwind CSS (PostCSS + Autoprefixer)
+
+### Backend
+- Node.js
+- Express.js (Framework minimalista)
+- CORS & Dotenv (Variables de entorno)
+- Arquitectura MVC / Por capas
+
+### Herramientas & Despliegue
+- Git & GitHub
+- Postman (Pruebas de red y endpoints)
+- Vercel (Despliegue de estáticos + Node.js Serverless Functions)
 
 ---
 
 ## 📁 Estructura del proyecto
 
-```
+```text
 taskflow-project/
+ ├── server/                      (NUEVO: Backend Node.js)
+ │    ├── src/
+ │    │    ├── config/env.js      (Validación de entorno)
+ │    │    ├── controllers/       (Validación y códigos HTTP)
+ │    │    ├── routes/            (Endpoints API)
+ │    │    ├── services/          (Lógica de negocio)
+ │    │    └── index.js           (Motor Express)
+ │    ├── .env
+ │    └── package.json
+ ├── src/                         (Frontend JS)
+ │    ├── api/client.js           (NUEVO: Cliente HTTP para hablar con la API)
+ │    ├── app.js                  (Lógica de UI, eventos, render)
+ │    └── taskManager.js          (Gestión de estado local)
  ├── index.html
- ├── input.css                    (entrada Tailwind)
- ├── output.css                   (CSS generado por Tailwind)
- ├── style.css                    (CSS clásico, ahora residual)
  ├── tailwind.config.js
- ├── postcss.config.js
  ├── package.json
- ├── package-lock.json
- ├── node_modules/
- ├── .gitattributes
- ├── .gitignore                   (para Node, SO, editor, etc.)
- ├── README.md
- ├── docs/
- │    └── design/
- │         └── wireframe.png
- └── src/
-      ├── app.js                  (lógica de UI, eventos, render)
-      └── taskManager.js          (gestión de tareas, datos, LocalStorage)
-```
-
----
-
-## 🚀 Instalación y ejecución en local
-
-### 1. Clonar el repositorio
-
-`git clone https://github.com/josemanu-formacion-it/taskflow-project
-cd taskflow-project`
-
-
-### 2. Instalar dependencias
-
-`npm install`
-
-
-### 3. Generar Tailwind CSS
-
-`npm run dev`
-
-
-### 4. Abrir el proyecto
-
-Abre `index.html` en tu navegador.
-
----
-
-## 🌙 Modo oscuro
-
-- Basado en la clase `dark` en `<html>`.
-- Persistencia en `localStorage`.
-- Botones para alternar entre modos.
-- Colores adaptados automáticamente con Tailwind.
-
----
-
-## 🔍 Buscador en tiempo real
-
-Filtra tareas por coincidencia en:
-
-- Título
-- Descripción
-
-Funciona junto con los filtros de estado.
-
----
-
-## 🧩 Filtros de tareas
-
-- Todas
-- Pendientes
-- Completadas
-
-El filtro activo se guarda en `localStorage`.
-
----
-
-## 🖼️ Modal de edición
-
-Incluye:
-
-- Animación de entrada/salida
-- Inputs estilizados
-- Botones modernos
-- Modo oscuro
-- Persistencia tras guardar
-
----
-
-## 🎨 Migración completa a Tailwind
-
-El CSS tradicional fue reemplazado por:
-
-- Clases utilitarias
-- `dark:` para modo oscuro
-- Sombras, bordes, espaciado
-- Transiciones
-- Layout responsive
-
----
-
-## 🧪 Testing manual
-
-Pruebas realizadas:
-
-- Lista vacía → funciona correctamente.
-- Añadir tarea sin título → bloqueado.
-- Añadir tarea larga → se muestra correctamente.
-- Marcar tareas como completadas → correcto.
-- Eliminar tareas → animación + borrado.
-- Recargar página → datos persisten.
-- Filtros → funcionan correctamente.
-- Buscador → filtra en tiempo real.
-- Modal → edita correctamente.
-- Modo oscuro → persistente.
-- Responsive → probado en móvil y escritorio.
-
----
-
-## ♿ Accesibilidad
-
-- Navegación por teclado.
-- Foco visible.
-- Labels asociados.
-- Botones con `aria-label`.
-- Contraste adecuado.
-- Modal accesible.
-
----
-
-## ☁️ Despliegue en Vercel
-
-URL pública: `https://taskflow-project-josemanu-formacion-it.vercel.app/`
-
-Cada push a `main` genera un nuevo despliegue automático.
-
----
-
-## 📄 Licencia
-
-Proyecto educativo y personal.  
-Libre para modificar y extender.
+ ├── vercel.json                  (NUEVO: Configuración de rutas Serverless)
+ └── docs/                        (Documentación e investigación IA/Backend)
