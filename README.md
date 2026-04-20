@@ -1,4 +1,4 @@
-# 📦 TaskFlow - De Aplicación Local a Arquitectura Cliente-Servidor
+# 📦 TaskFlow - De Aplicación Local a Arquitectura Cliente-Servidor.
 
 TaskFlow es mi proyecto principal dentro del bootcamp InfraOps. Lo que comenzó como una sencilla lista de tareas en el navegador, ha evolucionado a través de diferentes fases hasta convertirse en una aplicación Full-Stack profesional con su propia API RESTful.
 
