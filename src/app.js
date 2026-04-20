@@ -79,7 +79,7 @@ function animateTask(element) {
 function openModal(task) {
   editingTaskId = task.id;
   editTitle.value = task.title;
-  editDescription.value = task.description;
+  editDescription.value = task.description || "";
 
   editModal.classList.remove("hidden");
   const box = editModal.querySelector("div");
@@ -101,10 +101,9 @@ function closeModal() {
 
 cancelEdit.addEventListener("click", closeModal);
 
-editForm.addEventListener("submit", e => {
+editForm.addEventListener("submit", async e => {
   e.preventDefault();
-
-  taskManager.editTask(editingTaskId, editTitle.value, editDescription.value);
+  await taskManager.editTask(editingTaskId, editTitle.value, editDescription.value);
   closeModal();
   renderTasks();
 });
@@ -182,7 +181,7 @@ function renderTasks() {
   if (searchQuery.trim() !== "") {
     tasksToShow = tasksToShow.filter(t =>
       t.title.toLowerCase().includes(searchQuery) ||
-      t.description.toLowerCase().includes(searchQuery)
+      (t.description && t.description.toLowerCase().includes(searchQuery))
     );
   }
 
@@ -190,16 +189,13 @@ function renderTasks() {
     const clone = taskTemplate.content.cloneNode(true);
     const li = clone.querySelector("li");
 
-    // Título y descripción
     clone.querySelector(".task-title").textContent = task.title;
     clone.querySelector(".task-desc").textContent = task.description || "";
 
-    // Estilo si está completada
     if (task.completed) {
       clone.querySelector(".task-title").classList.add("line-through", "text-gray-500", "dark:text-gray-400");
     }
 
-    // Checkbox con estado correcto
     const checkbox = clone.querySelector(".task-check");
     checkbox.dataset.id = task.id;
     checkbox.checked = task.completed;
@@ -215,7 +211,7 @@ function renderTasks() {
 }
 
 // Crear tarea
-taskForm.addEventListener("submit", e => {
+taskForm.addEventListener("submit", async e => {
   e.preventDefault();
 
   const title = taskTitle.value.trim();
@@ -223,23 +219,23 @@ taskForm.addEventListener("submit", e => {
 
   if (!title) return;
 
-  taskManager.addTask(title, description);
+  await taskManager.addTask(title, description);
   renderTasks();
 
   taskForm.reset();
 });
 
 // Delegación de eventos para change (checkbox)
-taskList.addEventListener("change", e => {
+taskList.addEventListener("change", async e => {
   if (e.target.classList.contains("task-check")) {
     const id = e.target.dataset.id;
-    taskManager.toggleTask(id);
+    await taskManager.toggleTask(id);
     renderTasks();
   }
 });
 
 // Delegación de eventos para click (editar y eliminar)
-taskList.addEventListener("click", e => {
+taskList.addEventListener("click", async e => {
   const id = e.target.dataset.id;
 
   if (!id) return;
@@ -247,18 +243,26 @@ taskList.addEventListener("click", e => {
   if (e.target.classList.contains("delete-btn")) {
     const li = e.target.closest("li");
     li.classList.add("opacity-0", "translate-y-2");
-    setTimeout(() => {
-      taskManager.deleteTask(id);
+    setTimeout(async () => {
+      await taskManager.deleteTask(id);
       renderTasks();
     }, 200);
   }
 
   if (e.target.classList.contains("edit-btn")) {
-    const task = taskManager.tasks.find(t => t.id === id);
-    openModal(task);
+    const task = taskManager.tasks.find(t => t.id == id);
+    if(task) openModal(task);
   }
 });
 
-initChart();
-updateFilterButtons();
-renderTasks();
+// NUEVA FUNCIÓN DE INICIO ASÍNCRONO
+async function startApp() {
+    initChart();
+    updateFilterButtons();
+    
+    // Cargo mis tareas desde mi servidor Express
+    await taskManager.loadTasks();
+    renderTasks();
+}
+
+startApp();

@@ -1,256 +1,76 @@
-# 📝 TaskFlow — Gestor de Tareas con Tailwind, LocalStorage y Modo Oscuro
+# 📦 TaskFlow - De Aplicación Local a Arquitectura Cliente-Servidor
 
-TaskFlow es una aplicación web desarrollada como proyecto práctico del bootcamp, cuyo objetivo es construir un gestor de tareas completo aplicando buenas prácticas de HTML semántico, diseño responsive, arquitectura modular en JavaScript, persistencia con LocalStorage y migración total a Tailwind CSS. Incluye funcionalidades avanzadas como filtros, buscador en tiempo real, edición mediante modal, estadísticas dinámicas, animaciones suaves y modo oscuro persistente.
+TaskFlow es mi proyecto principal dentro del bootcamp InfraOps. Lo que comenzó como una sencilla lista de tareas en el navegador, ha evolucionado a través de diferentes fases hasta convertirse en una aplicación Full-Stack profesional con su propia API RESTful.
 
----
+------
 
-## 🎯 Objetivos del proyecto
+## 🚀 Fase 1 y 2: Los Cimientos y la IA (Resumen)
 
-Este proyecto cumple todos los requisitos del ejercicio:
+### Fase 1: Frontend y LocalStorage
+En la primera etapa de mi proyecto, me centré en los fundamentos de la web. Construí la interfaz de TaskFlow utilizando **HTML5 semántico**, **CSS3** y **Tailwind CSS** para garantizar un diseño responsivo y modo oscuro. La lógica de la aplicación se desarrolló con **JavaScript (ES6+)**, gestionando el estado de las tareas y persistiendo los datos temporalmente en el `LocalStorage` del navegador. Finalmente, desplegué esta primera versión estática en Vercel.
 
-1. Configuración del entorno (Git, GitHub, ramas, .gitignore, README).
-2. Planificación y diseño previo (wireframe + explicación).
-3. HTML semántico validado.
-4. Layout responsive con CSS (migrado a Tailwind).
-5. Adaptación móvil completa.
-6. Lógica en JavaScript modular.
-7. Persistencia con LocalStorage.
-8. Funcionalidades extra (filtros, búsqueda, edición, botones globales).
-9. Migración completa a Tailwind + modo oscuro.
-10. Testing manual documentado.
-11. Accesibilidad básica.
-12. Despliegue en Vercel.
+### Fase 2: Inteligencia Artificial en el Flujo de Trabajo
+Posteriormente, integré herramientas de IA en mi día a día. Utilicé **Cursor IDE**, **ChatGPT** y **Claude** para auditar mi código, sugerir mejoras, refactorizar métodos complejos y aplicar técnicas avanzadas de *Prompt Engineering*. Toda esta investigación, incluyendo comparativas de IA, experimentos con servidores MCP y reflexiones personales, la documenté exhaustivamente en la carpeta `docs/ai/` de mi repositorio.
 
 ---
 
-## 🧩 Planificación y diseño
+## 🧠 Fase 3: El Gran Salto al Backend (Node.js y Express)
 
-### ✏️ Wireframe inicial
+Esta fase representa un punto de inflexión crítico en mi proyecto. He abandonado el entorno confinado del navegador para adentrarme en la ingeniería de servidores, transformando TaskFlow en una aplicación con una verdadera **arquitectura cliente-servidor**.
 
-El diseño se realizó previamente en papel/Figma, definiendo:
+### 1. El Cambio de Paradigma: Adiós LocalStorage, Hola API REST
+He eliminado por completo la dependencia del `LocalStorage` en mi frontend. Ahora, mi interfaz web se comunica de forma asíncrona a través de la red con mi propio servidor **Node.js**. Esto me ha obligado a gestionar la física del mundo real en mi UI: latencia, tiempos de carga y posibles caídas del servidor. 
 
-- Cabecera con título y selector de modo oscuro.
-- Formulario para añadir tareas.
-- Lista principal de tareas.
-- Panel lateral con estadísticas.
-- Filtros y buscador.
-- Modal para edición.
+He implementado un sistema de gestión de estados en `app.js` que muestra feedback visual al usuario (estado de *carga*, *éxito* o *error*) mientras espera la respuesta de la red.
 
-El wireframe se encuentra en:
+### 2. Arquitectura por Capas (Separación de Responsabilidades)
+No me he limitado a escribir "endpoints rápidos". He diseñado mi servidor Express siguiendo un estricto patrón de separación de preocupaciones (SoC) en tres capas unidireccionales dentro de la carpeta `server/`:
 
-`docs/design/wireframe.png`
+* **Capa de Enrutamiento (`routes/`):** Escucha la red y mapea las URLs y verbos HTTP hacia el controlador adecuado. Es una capa puramente de tráfico.
+* **Capa de Controladores (`controllers/`):** Actúa como director de orquesta. Extrae los datos de `req.body` o `req.params`, aplica **validaciones defensivas en la frontera de red** (rechazando con un HTTP 400 si un título viene vacío, por ejemplo) y formatea la respuesta.
+* **Capa de Servicios (`services/`):** El corazón de mi lógica de negocio. Son funciones de JavaScript puro que desconocen por completo qué es Express o HTTP. Aquí se realiza la manipulación de datos reales.
 
+### 3. Semántica HTTP y Middlewares
+He diseñado una **API RESTful** estricta que respeta la idempotencia y la semántica de la red:
 
-### 🧠 Decisiones de diseño
+| Verbo HTTP | Endpoint | Acción | Código de Éxito |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/api/v1/tasks` | Recupera todas las tareas | `200 OK` |
+| **POST** | `/api/v1/tasks` | Crea una nueva tarea | `201 Created` |
+| **DELETE** | `/api/v1/tasks/:id` | Elimina una tarea por ID | `204 No Content` |
 
-- Layout dividido en contenido principal + panel lateral.
-- Tarjetas con sombras suaves y bordes redondeados.
-- Modo oscuro basado en clase `dark`.
-- Animaciones suaves al añadir/eliminar tareas.
-- Interfaz limpia y minimalista.
+Además, he implementado un sistema de **Middlewares**:
+* `express.json()` para parsear los payloads.
+* `cors()` para asegurar que solo orígenes permitidos consuman mi API.
+* **Middleware global de errores:** Un interceptor final que captura fallos (como un `NOT_FOUND`) y los traduce a códigos HTTP semánticos (404, 500) evitando que el servidor "caiga" o filtre trazas de error (stack traces) al cliente.
 
----
-
-## 🏗️ HTML semántico
-
-El proyecto utiliza:
-
-- `<header>`, `<main>`, `<section>`, `<aside>`, `<footer>`
-- Un único `<h1>`
-- Labels correctamente asociados
-- Template `<template>` para renderizar tareas
-- Validación con W3C sin errores
+### 4. Seguridad y Configuración (12-Factor App)
+Siguiendo los estándares de la industria, he extraído toda la configuración de mi servidor a variables de entorno usando `dotenv`. Mi módulo de configuración (`config/env.js`) evalúa antes de arrancar que las variables vitales (como el `PORT`) existan; si no, el servidor se niega a iniciar.
 
 ---
 
-## 📱 Diseño responsive
+## 📂 Estructura Actual del Proyecto
 
-El diseño se adapta a:
+Mi repositorio ahora se divide claramente en Cliente y Servidor:
 
-- Móviles
-- Tablets
-- Escritorio
-
-Cambios clave:
-
-- El panel lateral pasa debajo del contenido en pantallas pequeñas.
-- El formulario se reorganiza verticalmente.
-- Botones y tarjetas se ajustan automáticamente con Tailwind.
-
----
-
-## ✨ Funcionalidades principales
-
-- Crear tareas con título y descripción.
-- Editar tareas mediante modal.
-- Eliminar tareas con animación.
-- Marcar tareas como completadas.
-- Filtros dinámicos: todas / pendientes / completadas.
-- Buscador en tiempo real.
-- Botón “Marcar todas como completadas”.
-- Botón “Eliminar completadas”.
-- Estadísticas: total / completadas / pendientes.
-- Persistencia con LocalStorage.
-- Modo oscuro con persistencia.
-- Animaciones suaves.
-- Renderizado mediante `<template>`.
-- Arquitectura modular (`src/app.js` + `src/taskManager.js`).
-
----
-
-## 🛠️ Tecnologías utilizadas
-
-- HTML5 semántico
-- JavaScript ES Modules
-- Tailwind CSS
-- PostCSS + Autoprefixer
-- LocalStorage
-- Vercel
-
----
-
-## 📁 Estructura del proyecto
-
-```
+```text
 taskflow-project/
- ├── index.html
- ├── input.css                    (entrada Tailwind)
- ├── output.css                   (CSS generado por Tailwind)
- ├── style.css                    (CSS clásico, ahora residual)
- ├── tailwind.config.js
- ├── postcss.config.js
- ├── package.json
- ├── package-lock.json
- ├── node_modules/
- ├── .gitattributes
- ├── .gitignore                   (para Node, SO, editor, etc.)
- ├── README.md
  ├── docs/
- │    └── design/
- │         └── wireframe.png
- └── src/
-      ├── app.js                  (lógica de UI, eventos, render)
-      └── taskManager.js          (gestión de tareas, datos, LocalStorage)
-```
-
----
-
-## 🚀 Instalación y ejecución en local
-
-### 1. Clonar el repositorio
-
-`git clone https://github.com/josemanu-formacion-it/taskflow-project
-cd taskflow-project`
-
-
-### 2. Instalar dependencias
-
-`npm install`
-
-
-### 3. Generar Tailwind CSS
-
-`npm run dev`
-
-
-### 4. Abrir el proyecto
-
-Abre `index.html` en tu navegador.
-
----
-
-## 🌙 Modo oscuro
-
-- Basado en la clase `dark` en `<html>`.
-- Persistencia en `localStorage`.
-- Botones para alternar entre modos.
-- Colores adaptados automáticamente con Tailwind.
-
----
-
-## 🔍 Buscador en tiempo real
-
-Filtra tareas por coincidencia en:
-
-- Título
-- Descripción
-
-Funciona junto con los filtros de estado.
-
----
-
-## 🧩 Filtros de tareas
-
-- Todas
-- Pendientes
-- Completadas
-
-El filtro activo se guarda en `localStorage`.
-
----
-
-## 🖼️ Modal de edición
-
-Incluye:
-
-- Animación de entrada/salida
-- Inputs estilizados
-- Botones modernos
-- Modo oscuro
-- Persistencia tras guardar
-
----
-
-## 🎨 Migración completa a Tailwind
-
-El CSS tradicional fue reemplazado por:
-
-- Clases utilitarias
-- `dark:` para modo oscuro
-- Sombras, bordes, espaciado
-- Transiciones
-- Layout responsive
-
----
-
-## 🧪 Testing manual
-
-Pruebas realizadas:
-
-- Lista vacía → funciona correctamente.
-- Añadir tarea sin título → bloqueado.
-- Añadir tarea larga → se muestra correctamente.
-- Marcar tareas como completadas → correcto.
-- Eliminar tareas → animación + borrado.
-- Recargar página → datos persisten.
-- Filtros → funcionan correctamente.
-- Buscador → filtra en tiempo real.
-- Modal → edita correctamente.
-- Modo oscuro → persistente.
-- Responsive → probado en móvil y escritorio.
-
----
-
-## ♿ Accesibilidad
-
-- Navegación por teclado.
-- Foco visible.
-- Labels asociados.
-- Botones con `aria-label`.
-- Contraste adecuado.
-- Modal accesible.
-
----
-
-## ☁️ Despliegue en Vercel
-
-URL pública: `https://taskflow-project-josemanu-formacion-it.vercel.app/`
-
-Cada push a `main` genera un nuevo despliegue automático.
-
----
-
-## 📄 Licencia
-
-Proyecto educativo y personal.  
-Libre para modificar y extender.
+ │    ├── ai/              # Documentación de la Fase 2 (Prompt Engineering, etc.)
+ │    └── backend-api.md   # Documentación técnica (Axios, Postman, Swagger)
+ ├── server/               # ⚙️ NUEVO: El corazón del backend (Node + Express)
+ │    ├── src/
+ │    │    ├── config/     # Variables de entorno
+ │    │    ├── controllers/# Validación e interfaces HTTP
+ │    │    ├── routes/     # Endpoints REST
+ │    │    ├── services/   # Lógica de negocio
+ │    │    └── index.js    # Entrada del servidor y middlewares
+ │    ├── .env             # Credenciales locales (ignorado en Git)
+ │    └── package.json
+ ├── src/                  # 💻 El Frontend
+ │    ├── api/
+ │    │    └── client.js   # NUEVO: Capa de red (fetch) hacia el servidor
+ │    ├── app.js           # UI, DOM y manejo de estados asíncronos (await)
+ │    └── taskManager.js   # Lógica de cliente adaptada a promesas
+ ├── index.html
+ └── package.json          # Herramientas de frontend (Tailwind)
