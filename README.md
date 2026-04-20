@@ -1,89 +1,76 @@
-# 📝 TaskFlow — Gestor de Tareas Full-Stack (Tailwind + Node.js/Express)
+# 📦 TaskFlow - De Aplicación Local a Arquitectura Cliente-Servidor
 
-TaskFlow es una aplicación web desarrollada como proyecto práctico del bootcamp. Ha evolucionado de ser un proyecto puramente frontend (con LocalStorage) a una **aplicación Full-Stack** con arquitectura cliente-servidor. El proyecto aplica buenas prácticas de diseño responsive, migración a Tailwind CSS, y un backend robusto construido con Node.js y Express utilizando una arquitectura por capas.
-
----
-
-## 🎯 Objetivos del proyecto
-
-Este proyecto cumple todos los requisitos desde la Fase 1 hasta la Fase 3:
-
-1. Configuración del entorno (Git, GitHub, ramas, .gitignore, README).
-2. HTML semántico validado y Layout responsive con Tailwind CSS.
-3. Lógica en JavaScript modular en el frontend.
-4. Funcionalidades extra (filtros, búsqueda, edición, botones globales).
-5. Migración completa a Tailwind + modo oscuro persistente.
-6. **[Fase 3]** Creación de una API RESTful con Node.js y Express.
-7. **[Fase 3]** Arquitectura backend por capas (Rutas, Controladores, Servicios).
-8. **[Fase 3]** Sustitución de LocalStorage por peticiones HTTP asíncronas (`fetch`).
-9. **[Fase 3]** Manejo global de errores y validación defensiva en la red.
-10. **[Fase 3]** Configuración avanzada de despliegue Serverless en Vercel.
+TaskFlow es mi proyecto principal dentro del bootcamp InfraOps. Lo que comenzó como una sencilla lista de tareas en el navegador, ha evolucionado a través de diferentes fases hasta convertirse en una aplicación Full-Stack profesional con su propia API RESTful.
 
 ---
 
-## 🏗️ Arquitectura Backend (Fase 3)
+## 🚀 Fase 1 y 2: Los Cimientos y la IA (Resumen)
 
-En su última iteración, la aplicación abandonó el almacenamiento local en el navegador para consumir una API RESTful propia. Se ha implementado una **Arquitectura por Capas (Layered Architecture)** para garantizar la separación de responsabilidades:
+### Fase 1: Frontend y LocalStorage
+En la primera etapa de mi proyecto, me centré en los fundamentos de la web. Construí la interfaz de TaskFlow utilizando **HTML5 semántico**, **CSS3** y **Tailwind CSS** para garantizar un diseño responsivo y modo oscuro. La lógica de la aplicación se desarrolló con **JavaScript (ES6+)**, gestionando el estado de las tareas y persistiendo los datos temporalmente en el `LocalStorage` del navegador. Finalmente, desplegué esta primera versión estática en Vercel.
 
-* **Capa de Enrutamiento (`routes/`):** Define los endpoints de la API y los verbos HTTP. Delega la ejecución.
-* **Capa de Controladores (`controllers/`):** Extrae datos de la red (`req.body`), aplica validación estricta en la frontera de red y formatea la respuesta (códigos HTTP 200, 201, 204, 400, 404, 500).
-* **Capa de Servicios (`services/`):** Contiene la lógica de negocio pura. Desconoce por completo el contexto HTTP.
-* **Middlewares:** `express.json()` para parseo, `cors()` para seguridad, y un **Manejador Global de Errores** para evitar la caída del servidor.
-
----
-
-## ✨ Funcionalidades principales
-
-- **API RESTful:** Creación, lectura y eliminación de tareas a través de red.
-- **Estados de UI:** Feedback visual durante la carga y manejo de errores de conexión.
-- Filtros dinámicos (todas / pendientes / completadas) y buscador en tiempo real.
-- Estadísticas dinámicas (total / completadas / pendientes).
-- Modo oscuro persistente.
-- Animaciones suaves.
-- Renderizado mediante `<template>`.
-- Arquitectura modular frontend (`app.js`, `taskManager.js`, `api/client.js`).
+### Fase 2: Inteligencia Artificial en el Flujo de Trabajo
+Posteriormente, integré herramientas de IA en mi día a día. Utilicé **Cursor IDE**, **ChatGPT** y **Claude** para auditar mi código, sugerir mejoras, refactorizar métodos complejos y aplicar técnicas avanzadas de *Prompt Engineering*. Toda esta investigación, incluyendo comparativas de IA, experimentos con servidores MCP y reflexiones personales, la documenté exhaustivamente en la carpeta `docs/ai/` de mi repositorio.
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## 🧠 Fase 3: El Gran Salto al Backend (Node.js y Express)
 
-### Frontend
-- HTML5 semántico
-- JavaScript ES Modules (`async/await`, `fetch`)
-- Tailwind CSS (PostCSS + Autoprefixer)
+Esta fase representa un punto de inflexión crítico en mi proyecto. He abandonado el entorno confinado del navegador para adentrarme en la ingeniería de servidores, transformando TaskFlow en una aplicación con una verdadera **arquitectura cliente-servidor**.
 
-### Backend
-- Node.js
-- Express.js (Framework minimalista)
-- CORS & Dotenv (Variables de entorno)
-- Arquitectura MVC / Por capas
+### 1. El Cambio de Paradigma: Adiós LocalStorage, Hola API REST
+He eliminado por completo la dependencia del `LocalStorage` en mi frontend. Ahora, mi interfaz web se comunica de forma asíncrona a través de la red con mi propio servidor **Node.js**. Esto me ha obligado a gestionar la física del mundo real en mi UI: latencia, tiempos de carga y posibles caídas del servidor. 
 
-### Herramientas & Despliegue
-- Git & GitHub
-- Postman (Pruebas de red y endpoints)
-- Vercel (Despliegue de estáticos + Node.js Serverless Functions)
+He implementado un sistema de gestión de estados en `app.js` que muestra feedback visual al usuario (estado de *carga*, *éxito* o *error*) mientras espera la respuesta de la red.
+
+### 2. Arquitectura por Capas (Separación de Responsabilidades)
+No me he limitado a escribir "endpoints rápidos". He diseñado mi servidor Express siguiendo un estricto patrón de separación de preocupaciones (SoC) en tres capas unidireccionales dentro de la carpeta `server/`:
+
+* **Capa de Enrutamiento (`routes/`):** Escucha la red y mapea las URLs y verbos HTTP hacia el controlador adecuado. Es una capa puramente de tráfico.
+* **Capa de Controladores (`controllers/`):** Actúa como director de orquesta. Extrae los datos de `req.body` o `req.params`, aplica **validaciones defensivas en la frontera de red** (rechazando con un HTTP 400 si un título viene vacío, por ejemplo) y formatea la respuesta.
+* **Capa de Servicios (`services/`):** El corazón de mi lógica de negocio. Son funciones de JavaScript puro que desconocen por completo qué es Express o HTTP. Aquí se realiza la manipulación de datos reales.
+
+### 3. Semántica HTTP y Middlewares
+He diseñado una **API RESTful** estricta que respeta la idempotencia y la semántica de la red:
+
+| Verbo HTTP | Endpoint | Acción | Código de Éxito |
+| :--- | :--- | :--- | :--- |
+| **GET** | `/api/v1/tasks` | Recupera todas las tareas | `200 OK` |
+| **POST** | `/api/v1/tasks` | Crea una nueva tarea | `201 Created` |
+| **DELETE** | `/api/v1/tasks/:id` | Elimina una tarea por ID | `204 No Content` |
+
+Además, he implementado un sistema de **Middlewares**:
+* `express.json()` para parsear los payloads.
+* `cors()` para asegurar que solo orígenes permitidos consuman mi API.
+* **Middleware global de errores:** Un interceptor final que captura fallos (como un `NOT_FOUND`) y los traduce a códigos HTTP semánticos (404, 500) evitando que el servidor "caiga" o filtre trazas de error (stack traces) al cliente.
+
+### 4. Seguridad y Configuración (12-Factor App)
+Siguiendo los estándares de la industria, he extraído toda la configuración de mi servidor a variables de entorno usando `dotenv`. Mi módulo de configuración (`config/env.js`) evalúa antes de arrancar que las variables vitales (como el `PORT`) existan; si no, el servidor se niega a iniciar.
 
 ---
 
-## 📁 Estructura del proyecto
+## 📂 Estructura Actual del Proyecto
+
+Mi repositorio ahora se divide claramente en Cliente y Servidor:
 
 ```text
 taskflow-project/
- ├── server/                      (NUEVO: Backend Node.js)
+ ├── docs/
+ │    ├── ai/              # Documentación de la Fase 2 (Prompt Engineering, etc.)
+ │    └── backend-api.md   # Documentación técnica (Axios, Postman, Swagger)
+ ├── server/               # ⚙️ NUEVO: El corazón del backend (Node + Express)
  │    ├── src/
- │    │    ├── config/env.js      (Validación de entorno)
- │    │    ├── controllers/       (Validación y códigos HTTP)
- │    │    ├── routes/            (Endpoints API)
- │    │    ├── services/          (Lógica de negocio)
- │    │    └── index.js           (Motor Express)
- │    ├── .env
+ │    │    ├── config/     # Variables de entorno
+ │    │    ├── controllers/# Validación e interfaces HTTP
+ │    │    ├── routes/     # Endpoints REST
+ │    │    ├── services/   # Lógica de negocio
+ │    │    └── index.js    # Entrada del servidor y middlewares
+ │    ├── .env             # Credenciales locales (ignorado en Git)
  │    └── package.json
- ├── src/                         (Frontend JS)
- │    ├── api/client.js           (NUEVO: Cliente HTTP para hablar con la API)
- │    ├── app.js                  (Lógica de UI, eventos, render)
- │    └── taskManager.js          (Gestión de estado local)
+ ├── src/                  # 💻 El Frontend
+ │    ├── api/
+ │    │    └── client.js   # NUEVO: Capa de red (fetch) hacia el servidor
+ │    ├── app.js           # UI, DOM y manejo de estados asíncronos (await)
+ │    └── taskManager.js   # Lógica de cliente adaptada a promesas
  ├── index.html
- ├── tailwind.config.js
- ├── package.json
- ├── vercel.json                  (NUEVO: Configuración de rutas Serverless)
- └── docs/                        (Documentación e investigación IA/Backend)
+ └── package.json          # Herramientas de frontend (Tailwind)
